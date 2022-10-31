@@ -1,6 +1,7 @@
 import React, {Component} from 'react'
 import {Text, TouchableOpacity, View, TextInput } from 'react-native'
 import {db, auth} from '../firebase/config'
+import MyCamera from '../components/MyCamera'
 
 class NewPost extends Component {
     constructor(props){
@@ -10,6 +11,7 @@ class NewPost extends Component {
             textoPost:'',
             createdAt:'',
             foto:'',
+            showCamera:true,
         }
     }
 
@@ -26,7 +28,7 @@ class NewPost extends Component {
                 .then(() => {
                     this.setState({
                     textoPost: '',
-                    foto: '',
+                    showCamera: true,
                     })
 
                 this.props.navigation.navigate('Home')
@@ -34,12 +36,22 @@ class NewPost extends Component {
                 //equivalente a res.redirect
                 .catch(error => console.log(error))       
     }
-    
+    onImageUpload(url){
+        this.setState({
+            foto:url,
+            showCamera: false,
+
+        })
+    }
     render(){
         return(
-            <View> 
+            <View>
+                {this.state.showCamera ?
+                < MyCamera onImageUpload= {url=> this.onImageUpload(url)} />
+                :
+           <View> 
                 <Text>Subir posteo</Text>
-                <View>
+                
                     <TextInput  
                         placeholder='Texto posteo'
                         keyboardType='default'
@@ -52,7 +64,9 @@ class NewPost extends Component {
                         <Text>Publicar posteo</Text>
                     </TouchableOpacity>
                 </View>
+                }
             </View>
+
         )
     }
 

@@ -41,13 +41,13 @@ componentDidMount(){
     render(){
         return(
             <View> 
-                {
+               {/* {
                     this.state.loading ?
                     <ActivityIndicator size='large' color='black' /> :
 
-               <View>
+               <View> */}
                 <Text>Login</Text>
-                <View>
+                {/* <View> */}
                    <TextInput  
                        placeholder='email'
                        keyboardType='email-address'
@@ -65,9 +65,9 @@ componentDidMount(){
                         <Text>Ingresar</Text>
                     </TouchableOpacity>
                     <Text onPress={ () => this.props.navigation.navigate('Register')} >Ir a Registro</Text>
-                </View>
+                {/* </View>
             </View>
-             }
+             } */}
         </View>
         )
     }
