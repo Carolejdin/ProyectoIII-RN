@@ -5,8 +5,7 @@ import { View,
          TextInput,
          TouchableOpacity,
         StyleSheet } from 'react-native';
-import MyCamera from '../components/MyCamera'
-import { TabRouter } from '@react-navigation/routers';
+import MyCamera from '../components/MyCamera';
 
 class Register extends Component {
     constructor(){
@@ -56,9 +55,8 @@ class Register extends Component {
 
     onImageUpload(url){
         this.setState({
-            foto:url,
+            foto: url,
             showCamera: false,
-
         })
         
     }
@@ -97,19 +95,19 @@ class Register extends Component {
                     />  
                     {
                         this.state.showCamera ?
-                        <View style={width='100vw', heigth='100vh'}>
-                        <MyCamera onImageUpload= {url => this.onImageUpload(url)}/> 
-                        </View> :
-                  
-                    <TouchableOpacity onPress={()=> this.setState ({showCamara:true})}>
-                        <Text>Subir foto de perfil</Text>
-                    </TouchableOpacity>
+                        <View style={{width: '100vw', heigth: '100vh'}}>
+                            <MyCamera onImageUpload={url => this.onImageUpload(url)}/> 
+                        </View> 
+                        :
+                        <TouchableOpacity onPress={()=> this.setState({showCamera:true})}>
+                            <Text>Subir foto de perfil</Text>
+                        </TouchableOpacity>
                     }
                 {
                     this.state.email == '' || this.state.pass == '' || this.state.userName == '' ?
                     <Text>Completar los campos</Text> :
                
-                    <TouchableOpacity onPress={()=>this.registerUser(this.state.email, this.state.pass, this.state.userName, this.state.bio)}>
+                    <TouchableOpacity onPress={()=>this.registerUser(this.state.email, this.state.pass, this.state.userName, this.state.bio, this.state.foto)}>
                         <Text>Registrarme</Text>
                     </TouchableOpacity>
                 }

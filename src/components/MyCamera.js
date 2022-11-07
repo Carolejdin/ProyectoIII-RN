@@ -3,9 +3,6 @@ import { Camera } from 'expo-camera';
 import {storage} from '../firebase/config'
 import { View, Text, TouchableOpacity, StyleSheet, Image} from 'react-native'
 
-
-
-
 class MyCamera extends Component {
     constructor (props){
         super (props)
@@ -22,13 +19,14 @@ componentDidMount(){
     Camera.requestCameraPermissionsAsync()
     //este metodo nos permite acceder a la camara. que apenas cargue le pida permisos al componente de expo.
     // si este permiso es aceptado queremos modificar el estado
-    .then(()=> this.setState(
+    .then(() => this.setState(
         {
             permissions: true
         }
     ))
     .catch (error=> console.log(error))
 }
+
 sacarFoto(){
     this.metodosDeCamera.takePictureAsync()
     .then( foto => {
@@ -39,35 +37,31 @@ sacarFoto(){
     })
     .catch(e => console.log(e))
 }
-    guardarFoto(){
-fetch(this.state.urlTemporal) //busca la foto de la carpeta temporal en nuestra compu
-.then(res=> res.blob())
-//transforma eso que fue a buscar en el tipo de dato que necesitamos
-//las imagenes son un tipo de dato binario por eso ponemos res.blob
-.then(imagen => {
-    const refStorage= storage.ref(`photos/${Date.now()}.jpg}`);
-    refStorage.put(imagen)
-        .then(()=>{
-            refStorage.getDownloadURL()
-            .then(url => this.props.onImageUpload(url))
-        })
-        //getdownloadURL es un metodo asincronico
-        //put es un metodo asincronico, put guarda la foto en firebase (imagen es lo que recibo del segundo then)
-    //ref es un metodo de storage, se va a crear una carpeta photos y ahi va a guardar el archivo
-    //esto tiene una ruta con un nombre para poder guardarlo en firebase
-    //storage permite guardar archivos en alguna parte de firebase
 
-})
-.catch(e=> console.log(e))
-//tenemos los datos para procesar
+guardarFoto(){
+    fetch(this.state.urlTemporal) //busca la foto de la carpeta temporal en nuestra compu
+    .then(res=> res.blob())
+    //transforma eso que fue a buscar en el tipo de dato que necesitamos
+    //las imagenes son un tipo de dato binario por eso ponemos res.blob
+    .then(imagen => {
+        const refStorage= storage.ref(`photos/${Date.now()}.jpg`);
+        refStorage.put(imagen)
+            .then(()=>{
+                refStorage.getDownloadURL()
+                .then(url => this.props.onImageUpload(url))
+            })
+            //getdownloadURL es un metodo asincronico
+            //put es un metodo asincronico, put guarda la foto en firebase (imagen es lo que recibo del segundo then)
+        //ref es un metodo de storage, se va a crear una carpeta photos y ahi va a guardar el archivo
+        //esto tiene una ruta con un nombre para poder guardarlo en firebase
+        //storage permite guardar archivos en alguna parte de firebase
+
+    })
+    .catch(e=> console.log(e))
+    //tenemos los datos para procesar
 }
+
 cancelar(){}
-
-
-
-
-
-
 
 render(){
     return (
@@ -75,20 +69,20 @@ render(){
         <View  style = { styles.cameraBody}>
             {this.state.permissions ?
             this.state.showCamera ?
-        <View  style = { styles.cameraBody} > 
-            <Camera
-            style = { styles.cameraBody}
-            type= { Camera.Constants.Type.front}
-            ref={metodosDeCamera => this.metodosDeCamera = metodosDeCamera}
-            // la camara sabe sacar fotos, este componente sabe sacar una foto. (eso es un metodo= take picture)
-            //expo-camera tiene metodos adentro, no uso el take picture, por ende le digo a la camara que acabo de implementa
-            // buscame ese metodo que sepa sacar fotos y usalo
-            // que use su propia forma de sacar las fotos y la saque
-            // no vamos a escribir take picture
-            />
-            <TouchableOpacity style={styles.button} onPress= {()=>this.sacarFoto()}>
-                    <Text>sacar foto</Text>
-            </TouchableOpacity>
+            <View  style = { styles.cameraBody} > 
+                <Camera
+                    style = { styles.cameraBody}
+                    type= { Camera.Constants.Type.front}
+                    ref={metodosDeCamera => this.metodosDeCamera = metodosDeCamera}
+                    // la camara sabe sacar fotos, este componente sabe sacar una foto. (eso es un metodo= take picture)
+                    //expo-camera tiene metodos adentro, no uso el take picture, por ende le digo a la camara que acabo de implementa
+                    // buscame ese metodo que sepa sacar fotos y usalo
+                    // que use su propia forma de sacar las fotos y la saque
+                    // no vamos a escribir take picture
+                    />
+                <TouchableOpacity style={styles.button} onPress= {()=>this.sacarFoto()}>
+                        <Text>sacar foto</Text>
+                </TouchableOpacity>
             </ View>
             :
             <View  style={styles.preview}>
@@ -103,9 +97,9 @@ render(){
                 <TouchableOpacity style={styles.button} onPress={()=> this.guardarFoto()}>
                     <Text>Aceptar</Text>
                 </TouchableOpacity>
-                </View>
+            </View>
                 :
-        <Text> No tengo permisos</Text>
+            <Text> No tengo permisos</Text>
             }
         </View>
         // esto depende de si request camera permissionsAsync nos da permisos o no
@@ -117,6 +111,8 @@ render(){
 const styles= StyleSheet.create ({
     cameraBody: {
         height: '80vh',
+        width: '80vw',
+        position: 'absolute'
     },
     button:{
         height: '5vh',
