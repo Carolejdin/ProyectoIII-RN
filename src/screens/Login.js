@@ -34,7 +34,7 @@ componentDidMount(){
                 //equivalente a res.redirect
                 this.props.navigation.navigate('HomeMenu')
             })
-            .catch(error => console.log(error))
+            .catch(error => this.setState({errors:error}))
     }
 
 
@@ -51,19 +51,24 @@ componentDidMount(){
                    <TextInput  
                        placeholder='email'
                        keyboardType='email-address'
-                       onChangeText={ text => this.setState({email:text}) }
+                       onChangeText={ text => this.setState({errors: '', email:text}) }
                        value={this.state.email}
                     /> 
                     <TextInput  
                         placeholder='password'
                         keyboardType='default'
-                        onChangeText={ text => this.setState({pass:text}) }
+                        secureTextEntry= {true}
+                        onChangeText={ text => this.setState({errors: '', pass:text}) }
                         value={this.state.pass}
                     />  
-
-                    <TouchableOpacity onPress={()=>this.loginUser(this.state.email, this.state.pass)}>
+                    { this.state.errors == '' ?
+                        <TouchableOpacity onPress={()=>this.loginUser(this.state.email, this.state.pass)}>
                         <Text>Ingresar</Text>
-                    </TouchableOpacity>
+                        </TouchableOpacity> :
+                        <Text>{this.state.errors.message}</Text>
+                      
+                    }
+                 
                     <Text onPress={ () => this.props.navigation.navigate('Register')} >Ir a Registro</Text>
                 {/* </View>
             </View>

@@ -44,7 +44,7 @@ class Register extends Component {
                         showCamera: false,                        
                     })
 
-                    this.props.navigation.navigate('HomeMenu')
+                    this.props.navigation.navigate('Login')
                 })
                 //equivalente a res.redirect
                 .catch(error => console.log(error))    
