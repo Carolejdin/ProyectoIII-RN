@@ -18,7 +18,7 @@ class NewPost extends Component {
     newPost(owner, textoPost, foto){
         //Registrar en firebase y si el reigstro sale bien redireccionar a Home
                 db.collection('posts').add({
-                    owner: 'agusbreit',
+                    owner: auth.currentUser.email,
                     textoPost: textoPost,
                     foto: foto,
                     likes: [],

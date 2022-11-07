@@ -2,6 +2,9 @@
 //Importar toda la estreuctura de navegación
 
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
+import { FontAwesome } from '@expo/vector-icons';
+import { Ionicons } from '@expo/vector-icons';
+import { MaterialIcons } from '@expo/vector-icons';
 
 import Home from '../screens/home';
 import Profile from '../screens/profile';
@@ -14,9 +17,15 @@ function HomeMenu(){
 
     return (
         <Tab.Navigator>
-            <Tab.Screen name="Home" component={ Home } />
-            <Tab.Screen name="Profile" component={ Profile } />
-            <Tab.Screen name="NewPost" component={ NewPost } />
+            <Tab.Screen name="Home" component={ Home } options={
+                {tabBarIcon: ()=> <FontAwesome name="home" size={24} color="black" />}
+            } />
+            <Tab.Screen name="Profile" component={ Profile } options={
+                {tabBarIcon: ()=> <Ionicons name="person-circle" size={24} color="black" />}
+            } />
+            <Tab.Screen name="NewPost" component={ NewPost }  options={
+                {tabBarIcon: ()=> <MaterialIcons name="add-a-photo" size={24} color="black" />}
+            }/>
         </Tab.Navigator>
     )
 
