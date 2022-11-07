@@ -4,7 +4,8 @@ import { View,
          Text,
          TextInput,
          TouchableOpacity,
-        StyleSheet } from 'react-native';
+        StyleSheet,
+        ActivityIndicator } from 'react-native';
 import MyCamera from '../components/MyCamera';
 
 class Register extends Component {
@@ -23,7 +24,7 @@ class Register extends Component {
 
 
     registerUser(email, pass, userName, bio, foto){
-        //Registrar en firebase y si el reigstro sale bien redireccionar a Home
+        //Registrar en firebase y si el reigstro sale bien redireccionar a login
         auth.createUserWithEmailAndPassword(email, pass)
             .then( res => {
                 
@@ -43,14 +44,14 @@ class Register extends Component {
                         errors:'',
                         showCamera: false,                        
                     })
-
+                   
                     this.props.navigation.navigate('Login')
                 })
-                //equivalente a res.redirect
                 .catch(error => console.log(error))    
                 
             })
-            .catch(error => console.log(error))
+           // .catch(error => console.log(error))    
+            .catch(error => this.setState({errors:error}))
     }
 
     onImageUpload(url){
@@ -65,32 +66,30 @@ class Register extends Component {
         return(
             <View> 
                 <Text>Registro</Text>
-        
-            
                 <View>
                     <TextInput  
                         placeholder='email'
                         keyboardType='email-address'
-                        onChangeText={ text => this.setState({email:text}) }
+                        onChangeText={ text => this.setState({errors:'',email:text}) }
                         value={this.state.email}
                     /> 
                     <TextInput  
                         placeholder='password'
                         keyboardType='default'
                         secureTextEntry= {true}
-                        onChangeText={ text => this.setState({pass:text}) }
+                        onChangeText={ text => this.setState({errors:'',pass:text}) }
                         value={this.state.pass}
                     /> 
                     <TextInput  
                         placeholder='user name'
                         keyboardType='default'
-                        onChangeText={ text => this.setState({userName:text}) }
+                        onChangeText={ text => this.setState({errors:'', userName:text}) }
                         value={this.state.userName}
                     />
                     <TextInput  
                         placeholder='Mini Bio'
                         keyboardType='default'
-                        onChangeText={ text => this.setState({bio:text}) }
+                        onChangeText={ text => this.setState({errors:'',bio:text}) }
                         value={this.state.bio}
                     />  
                     {
@@ -110,7 +109,10 @@ class Register extends Component {
                     <TouchableOpacity onPress={()=>this.registerUser(this.state.email, this.state.pass, this.state.userName, this.state.bio, this.state.foto)}>
                         <Text>Registrarme</Text>
                     </TouchableOpacity>
+                    
+                  
                 }
+                 <Text>{this.state.errors.message}</Text>
                     <Text onPress={ () => this.props.navigation.navigate('Login')} >Ir a login</Text>
                 
                 </View>

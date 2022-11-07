@@ -60,6 +60,10 @@ render(){
                 resizeMode='cover'
                 />
             <Text> {this.props.postData.data.textoPost}</Text>
+            <TouchableOpacity onPress={()=> this.props.navigation.navigate('OtrosPerfiles',{email:this.props.postData.data.owner}) }>
+            <Text> Subido por: {this.props.postData.data.owner}</Text>{/*  carga la vista y usa el email para buscarlo depsues. pasar props a traves de navegacion  */}
+                </TouchableOpacity>
+            
             <Text> Cantidad de Likes:{this.state.cantidadLikes}</Text>
             {
                 this.state.miLike ?

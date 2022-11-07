@@ -14,16 +14,14 @@ class Login extends Component {
             email:'',
             pass:'',
             errors:'',
-            loading: true
+            //loading: true
         }
     }
 componentDidMount(){
     auth.onAuthStateChanged(user => {
         if(user){
             this.props.navigation.navigate('HomeMenu')
-        } else{
-            this.state.loading = false
-        }
+        } 
        
     })
 }

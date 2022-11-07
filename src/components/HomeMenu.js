@@ -6,7 +6,7 @@ import { FontAwesome } from '@expo/vector-icons';
 import { Ionicons } from '@expo/vector-icons';
 import { MaterialIcons } from '@expo/vector-icons';
 
-import Home from '../screens/home';
+import ProfileNav from './ProfileNav';
 import Profile from '../screens/profile';
 import NewPost from '../screens/newPost';
 
@@ -17,7 +17,8 @@ function HomeMenu(){
 
     return (
         <Tab.Navigator>
-            <Tab.Screen name="Home" component={ Home } options={
+            {/* Aca tiene que ir una navegacion stack con Home y otro profile */}
+            <Tab.Screen name="Home" component={ ProfileNav } options={
                 {tabBarIcon: ()=> <FontAwesome name="home" size={24} color="black" />}
             } />
             <Tab.Screen name="Profile" component={ Profile } options={

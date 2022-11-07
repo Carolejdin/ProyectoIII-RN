@@ -61,7 +61,14 @@ guardarFoto(){
     //tenemos los datos para procesar
 }
 
-cancelar(){}
+cancelar(){
+
+        this.setState({
+            urlTemporal: '',
+            showCamera:true 
+        })
+   
+}
 
 render(){
     return (

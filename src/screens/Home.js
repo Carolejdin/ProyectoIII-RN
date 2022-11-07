@@ -13,7 +13,7 @@ class Home extends Component{
     }
 
     componentDidMount(){
-        db.collection('posts').onSnapshot(
+        db.collection('posts').orderBy('createdAt', 'desc').onSnapshot(
             docs => {
                 let posts = [];
                 docs.forEach( doc => {
@@ -24,12 +24,9 @@ class Home extends Component{
                     this.setState({
                         posts: posts
                     })
-                })
-                
+                }) 
             }
         )
-
-
     }
 
     render(){
@@ -40,7 +37,7 @@ class Home extends Component{
                 <FlatList 
                     data={this.state.posts}
                     keyExtractor={ onePost => onePost.id.toString()}
-                    renderItem={ ({item}) => <Post postData={item} />}
+                    renderItem={ ({item}) => <Post postData={item} navigation={this.props.navigation} />}
                 />  
                   
             </>
