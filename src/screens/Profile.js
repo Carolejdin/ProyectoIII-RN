@@ -3,6 +3,7 @@ import {auth, db} from '../firebase/config'
 import firebase from 'firebase'
 import React, { Component } from 'react';
 import Post from '../components/Post'
+import { computeWindowedRenderLimits } from 'react-native/Libraries/Lists/VirtualizeUtils';
 
 
 class Profile extends Component {
@@ -14,40 +15,43 @@ class Profile extends Component {
             miniBio:'',
             foto:'',
             cantPost:'', 
-            posts:[]
+            posts:[],
         }
     }
 
 
     componentDidMount(){
-        db.collection('posts').where('owner', '==', this.props.route.params.email).onSnapshot(
-            docs => {
-                let posts = [];
-                docs.forEach( doc => {
-                    posts.push({
-                        id: doc.id,
-                        data: doc.data()
-                    })
-                    this.setState({
-                        posts: posts
-                    })
-                }) 
-            }
-        )
-        db.collection('users').where('owner', '==', this.props.route.params.email).onSnapshot(
-            docs => {
-                let user = [];
-                docs.forEach( doc => {
-                    user.push({
-                        id: doc.id,
-                        data: doc.data()
-                    })
-                    this.setState({
-                        user: user
-                    })
-                }) 
-            }
-        )
+
+            db.collection('posts').where('owner', '==', this.props.route.params == undefined ? auth.currentUser.email : this.props.route.params.email).onSnapshot( 
+                docs => {
+                    let posts = [];
+                    docs.forEach( doc => {
+                        posts.push({
+                            id: doc.id,
+                            data: doc.data()
+                        })
+                        this.setState({
+                            posts: posts
+                        })
+                    }) 
+                }
+            )
+            db.collection('users').where('owner', '==', this.props.route.params == undefined ? auth.currentUser.email : this.props.route.params.email).onSnapshot(
+                docs => {
+                    let user = [];
+                    docs.forEach( doc => {
+                        user.push({
+                            id: doc.id,
+                            data: doc.data()
+                        })
+                        this.setState({
+                            user: user
+                        })
+                    }) 
+                    console.log(user) //NO ESTA BUSCANDO LOS USUARIOS QUE COINCIDEN CON EL MAIL DE CURRENT USER
+                }
+            ) 
+           
     }
 
     render(){
@@ -57,7 +61,7 @@ class Profile extends Component {
             {
                 this.state.user.length == 0 ?
                 <Text>  </Text> :
-                <Text style={styles.text}> {this.state.user[0].data.userName} </Text>
+                <Text style={styles.text}> {this.state.user[0].data.userName} </Text> //no anda cuando es mi priopio perfil
             }
             <Text style={styles.text2}> Lista de posteos</Text>
             <FlatList 

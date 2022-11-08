@@ -12,7 +12,7 @@ function ProfileNav() {
      <Stack.Navigator>
         <Stack.Screen name="Home" component={ Home } options={{headerShown: false}}/>
         
-        <Stack.Screen name="OtrosPerfiles" component={ Profile } options={{headerShown: false}}/>    
+        <Stack.Screen name="OtrosPerfiles" component={ Profile } />    
      </Stack.Navigator>
   
   );
