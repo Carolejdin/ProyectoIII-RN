@@ -54,7 +54,9 @@ render(){
     console.log(this.props);
     return(
         <View style={styles.container}>
-            <Text  style={styles.text2}>Subido por: {this.props.postData.data.owner}</Text>{/*  carga la vista y usa el email para buscarlo depsues. pasar props a traves de navegacion  */}
+           <TouchableOpacity style={styles.text} onPress={()=> this.props.navigation.navigate('OtrosPerfiles',{email:this.props.postData.data.owner}) }>
+            <Text  style={styles.text2}>Subido por: {this.props.postData.data.owner} </Text>{/*  carga la vista y usa el email para buscarlo depsues. pasar props a traves de navegacion  */}
+                </TouchableOpacity>
             <Image
                 style={styles.foto}
                 source={{uri: this.props.postData.data.foto}}
@@ -73,8 +75,13 @@ render(){
             } 
             <Text style={styles.text}> {this.state.cantidadLikes} likes</Text>
             <Text style={styles.text} > {this.props.postData.data.textoPost}</Text>
-            <TouchableOpacity style={styles.text} onPress={()=> this.props.navigation.navigate('OtrosPerfiles',{email:this.props.postData.data.owner}) }>
-                </TouchableOpacity>
+           
+            <TouchableOpacity onPress={()=> this.props.navigation.navigate (
+                'Comments', {id:this.props.id} // quiero mandar el id del comentario en el que quiero entrar// asi podemos entrar al params del metodo route.// ahora con el id se que posteo selecciono.
+                )}>
+            <Text>Agregar comentario</Text>
+
+        </TouchableOpacity>
             
             
            
@@ -110,8 +117,8 @@ const styles= StyleSheet.create ({
         color:'#926F5B',
         fontSize:20,
         backgroundColor:'white',
-        marginRight:'5%',
-        width:"50%",
+        marginRight:'40%',
+        width:"100%",
         borderRadius:4
     },
     like:{
