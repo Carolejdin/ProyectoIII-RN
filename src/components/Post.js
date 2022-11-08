@@ -54,6 +54,7 @@ render(){
     console.log(this.props);
     return(
         <View style={styles.container}>
+            <Text  style={styles.text2}>Subido por: {this.props.postData.data.owner}</Text>{/*  carga la vista y usa el email para buscarlo depsues. pasar props a traves de navegacion  */}
             <Image
                 style={styles.foto}
                 source={{uri: this.props.postData.data.foto}}
@@ -70,10 +71,9 @@ render(){
                 <FontAwesome name='heart-o' color='white' size={28} />
              </TouchableOpacity>
             } 
-            <Text style={styles.text}> Cantidad de Likes:{this.state.cantidadLikes}</Text>
+            <Text style={styles.text}> {this.state.cantidadLikes} likes</Text>
             <Text style={styles.text} > {this.props.postData.data.textoPost}</Text>
             <TouchableOpacity style={styles.text} onPress={()=> this.props.navigation.navigate('OtrosPerfiles',{email:this.props.postData.data.owner}) }>
-            <Text  style={styles.text2}>Subido por: {this.props.postData.data.owner}</Text>{/*  carga la vista y usa el email para buscarlo depsues. pasar props a traves de navegacion  */}
                 </TouchableOpacity>
             
             
@@ -99,18 +99,24 @@ const styles= StyleSheet.create ({
         alignItems:'center'   
     },
     text:{
+    marginTop: 0,
     fontFamily: 'Sans Serif',
     fontSize:18,
-    color:'white',    
+    color:'white', 
+    marginLeft:'0'   
     },
     text2:{
         fontFamily: 'Sans Serif',
-        color:'white',
-        fontSize:18,
-        marginBottom: 15,
+        color:'#926F5B',
+        fontSize:20,
+        backgroundColor:'white',
+        marginRight:'5%',
+        width:"50%",
+        borderRadius:4
     },
     like:{
-        marginRight:'25%'
+        marginRight:'25%',
+        marginTop: 2,
     }
 
     
