@@ -32,8 +32,8 @@ class Home extends Component{
     render(){
         return(
             <>
-                <Text> Home</Text>
-                <Text> Lista de posteos</Text>
+                {/* <Text style={styles.text}> Home</Text> */}
+                <Text style={styles.text}> Lista de posteos</Text>
                 <FlatList 
                     data={this.state.posts}
                     keyExtractor={ onePost => onePost.id.toString()}
@@ -45,5 +45,22 @@ class Home extends Component{
         )
     }
 }
+const styles= StyleSheet.create ({
+
+    text:{
+        fontFamily: 'Playfair Display',
+        color:'white',
+        fontSize: 40,
+        textAlign:'center',
+        backgroundColor:'#926F5B'
+    }
+
+    
+
+})
 
 export default Home
+
+
+
+    

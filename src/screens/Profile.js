@@ -1,4 +1,4 @@
-import {Text, FlatList, View} from 'react-native'
+import {Text, FlatList, View, StyleSheet} from 'react-native'
 import {auth, db} from '../firebase/config'
 import firebase from 'firebase'
 import React, { Component } from 'react';
@@ -57,9 +57,9 @@ class Profile extends Component {
             {
                 this.state.user.length == 0 ?
                 <Text>  </Text> :
-                <Text> {this.state.user[0].data.userName} </Text>
+                <Text style={styles.text}> {this.state.user[0].data.userName} </Text>
             }
-            <Text> Lista de posteos</Text>
+            <Text style={styles.text2}> Lista de posteos</Text>
             <FlatList 
                 data={this.state.posts}
                 keyExtractor={ onePost => onePost.id.toString()}
@@ -69,5 +69,24 @@ class Profile extends Component {
         )
     }
 }
+const styles= StyleSheet.create ({
+
+    text:{
+        fontFamily: 'Playfair Display',
+        color:'white',
+        fontSize: 40,
+        textAlign:'center',
+        backgroundColor:'#926F5B'
+    },
+    text2:{
+        fontFamily: 'Playfair Display',
+        color:'black',
+        fontSize: 20,
+        backgroundColor:'white'
+    }
+
+    
+
+})
 
 export default Profile
