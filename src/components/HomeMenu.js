@@ -19,13 +19,13 @@ function HomeMenu(){
         <Tab.Navigator>
             {/* Aca tiene que ir una navegacion stack con Home y otro profile */}
             <Tab.Screen name="Home" component={ ProfileNav } options={
-                {tabBarIcon: ()=> <FontAwesome name="home" size={24} color="black" />}
+                {tabBarIcon: ()=> <FontAwesome name="home" size={26} color="#926F5B" />}
             } />
             <Tab.Screen name="Profile" component={ Profile } options={
-                {tabBarIcon: ()=> <Ionicons name="person-circle" size={24} color="black" />}
+                {tabBarIcon: ()=> <Ionicons name="person-circle" size={26} color="#926F5B" />}
             } />
             <Tab.Screen name="NewPost" component={ NewPost }  options={
-                {tabBarIcon: ()=> <MaterialIcons name="add-a-photo" size={24} color="black" />}
+                {tabBarIcon: ()=> <MaterialIcons name="add-a-photo" size={26} color="#926F5B" />}
             }/>
         </Tab.Navigator>
     )

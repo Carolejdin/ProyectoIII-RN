@@ -2,6 +2,7 @@ import React, {Component} from 'react'
 import { Text, View, TouchableOpacity, StyleSheet, Image} from 'react-native'
 import {auth, db} from '../firebase/config'
 import firebase from 'firebase'
+import { AntDesign } from '@expo/vector-icons'; 
 
 
 class Post extends Component {
@@ -67,13 +68,23 @@ render(){
             <Text style={styles.text}> Cantidad de Likes:{this.state.cantidadLikes}</Text>
             {
                 this.state.miLike ?
-                <TouchableOpacity onPress={()=> this.disLike()}>
-                    <Text> No me gusta</Text>
-                </TouchableOpacity>
+                <TouchableOpacity onPress={()=> this.disLike()} >
+                 <Text style={styles.like} > No me gusta</Text>
+                 </TouchableOpacity>
                 :
-                <TouchableOpacity onPress={()=> this.like()}>
-                    <Text> Me gusta</Text>
-                </TouchableOpacity>
+                 <TouchableOpacity  onPress={()=> this.like()}>
+                     <Text style={styles.like} > Me gusta</Text>
+                 </TouchableOpacity>
+                // this.state.miLike ?
+                
+                // <TouchableOpacity onPress={()=> this.disLike()} options={
+                //     {tabBarIcon: ()=> <AntDesign name="hearto" size={24} color="black" />}
+                // }></TouchableOpacity>
+                // :
+                // <TouchableOpacity onPress={()=> this.disLike()} options={
+                //     {tabBarIcon: ()=> <AntDesign name="heart" size={24} color="black" />}
+                // }></TouchableOpacity>
+            
 
             }
                 
@@ -94,8 +105,12 @@ const styles= StyleSheet.create ({
     text:{
     fontFamily: 'Sans Serif',
     color:'white'
-    
     },
+    like:{
+        fontFamily: 'Sans Serif',
+        color:'white',
+        borderBottomColor:'black' 
+    }
 
     
 
