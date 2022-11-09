@@ -1,5 +1,5 @@
 import React, {Component} from 'react'
-import { Text, View, TouchableOpacity, StyleSheet, Image} from 'react-native'
+import { Text, View, TouchableOpacity, StyleSheet, Image, FlatList} from 'react-native'
 import {auth, db} from '../firebase/config'
 import firebase from 'firebase'
 import { FontAwesome } from '@expo/vector-icons';
@@ -75,13 +75,17 @@ render(){
             } 
             <Text style={styles.text}> {this.state.cantidadLikes} likes</Text>
             <Text style={styles.text} > {this.props.postData.data.textoPost}</Text>
+           <FlatList 
+                    data={this.props.postData.data.comentario}
+                    keyExtractor={ oneComent => oneComent.createdAt.toString()}
+                    renderItem={ ({item}) => <Text>{item.owner} comento: {item.comentario}</Text>}
+                />  
            
             <TouchableOpacity onPress={()=> this.props.navigation.navigate (
                 'Comments', {id:this.props.id} // quiero mandar el id del comentario en el que quiero entrar// asi podemos entrar al params del metodo route.// ahora con el id se que posteo selecciono.
                 )}>
             <Text>Agregar comentario</Text>
-
-        </TouchableOpacity>
+            </TouchableOpacity>
             
             
            

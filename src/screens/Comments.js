@@ -39,6 +39,9 @@ db
     })
     
 })
+.then(() => {
+    this.props.navigation.navigate('Home')
+    })
 }
 
 render(){
