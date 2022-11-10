@@ -9,9 +9,11 @@ class Post extends Component {
         super (props)
         this.state={
             cantidadLikes:this.props.postData.data.likes.length,
-            miLike: false
+            miLike: false, 
+            comentario: this.props.postData.data.comentario.sort((a,b)=> b.createdAt - a.createdAt),
         }
     }
+
 componentDidMount (){
     console.log(this.props)
     if(this.props.postData.data.likes.includes(auth.currentUser.email)){
@@ -51,12 +53,13 @@ disLike(){
 
 
 render(){
-    console.log(this.props);
+    console.log(this.state.comentario);
     return(
         <View style={styles.container}>
            <TouchableOpacity style={styles.text} onPress={()=> this.props.navigation.navigate('OtrosPerfiles',{email:this.props.postData.data.owner}) }>
             <Text  style={styles.text2}>Subido por: {this.props.postData.data.owner} </Text>{/*  carga la vista y usa el email para buscarlo depsues. pasar props a traves de navegacion  */}
                 </TouchableOpacity>
+            
             <Image
                 style={styles.foto}
                 source={{uri: this.props.postData.data.foto}}
@@ -75,8 +78,9 @@ render(){
             } 
             <Text style={styles.text}> {this.state.cantidadLikes} likes</Text>
             <Text style={styles.text} > {this.props.postData.data.textoPost}</Text>
+            {<Text> Cantidad de comentarios:{this.state.comentario.length} </Text> }
            <FlatList 
-                    data={this.props.postData.data.comentario}
+                    data={this.state.comentario.slice(0,4)} 
                     keyExtractor={ oneComent => oneComent.createdAt.toString()}
                     renderItem={ ({item}) => <Text>{item.owner} comento: {item.comentario}</Text>}
                 />  

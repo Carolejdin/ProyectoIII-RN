@@ -12,7 +12,6 @@ function ProfileNav() {
     //Plantear la navegación
      <Stack.Navigator>
         <Stack.Screen name="Home" component={ Home } options={{headerShown: false}}/>
-        
         <Stack.Screen name="OtrosPerfiles" component={ Profile } />    
         <Stack.Screen name="Comments" component={ Comments } />  
      </Stack.Navigator>

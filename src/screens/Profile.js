@@ -57,7 +57,7 @@ class Profile extends Component {
     render(){
         console.log(this.state.user);
         return(
-        <View>
+        <View style={styles.scroll}>
             {
                 this.state.user.length == 0 ?
                 <Text>  </Text> :
@@ -87,6 +87,9 @@ const styles= StyleSheet.create ({
         color:'black',
         fontSize: 20,
         backgroundColor:'white'
+    },
+    scroll:{
+        flex: 1
     }
 
     
