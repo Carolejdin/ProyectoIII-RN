@@ -33,7 +33,7 @@ class Home extends Component{
         return(
             <>
                 {/* <Text style={styles.text}> Home</Text> */}
-                <Text style={styles.text}> Lista de posteos</Text>
+                <Text style={styles.text}> POSTEOS </Text>
                 <FlatList 
                     data={this.state.posts}
                     keyExtractor={ onePost => onePost.id.toString()}
@@ -48,13 +48,13 @@ class Home extends Component{
 const styles= StyleSheet.create ({
 
     text:{
-        fontFamily: 'Playfair Display',
+        fontFamily: 'Oswald, sans-serif',
         color:'white',
-        fontSize: 40,
+        fontWeight: 'bold',
+        fontSize: 35,
         textAlign:'center',
         backgroundColor:'#926F5B'
     }
-
     
 
 })

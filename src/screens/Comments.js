@@ -55,25 +55,25 @@ render(){
     console.log(this.state.data)
     console.log(this.state.data.comentario) 
     return (
-        <View>
+        <View >
+        <Text style={styles.text}> Comentarios del posteo</Text>
+
      { this.state.data.comentario == undefined?
-       <Text> Hola </Text>:
+       <Text>  </Text>:
        this.state.data.comentario.length == 0 ?
-       <Text> No hay comentarios, se el primero en comentar </Text> :
-      <View> 
-       <Text> Comentarios del posteo</Text>
+       <Text style={styles.text2} > No hay comentarios, se el primero en comentar </Text> :
+    
+    <View > 
       
             <FlatList 
                     data={this.state.data.comentario}
                     keyExtractor={ oneComent => oneComent.createdAt.toString()}
-                    renderItem={ ({item}) => <Text>{item.owner} comento: {item.comentario}</Text>}
+                    renderItem={ ({item}) => <Text style={styles.textComent}>{item.owner} comento: {item.comentario}</Text>}
      
                 /> 
                 
-                </View> }
-       
-
-      
+      </View> }
+ 
             <TextInput 
             placeholder='Agregar comentario'
             style={styles.input}
@@ -84,10 +84,10 @@ render(){
     
        {this.state.comentario == '' ?
        <TouchableOpacity >
-       <Text> Escriba para comentar </Text>
+       <Text style={styles.text2}> Escriba para comentar </Text>
        </TouchableOpacity> :
        <TouchableOpacity onPress={()=> this.subirComentario(this.state.comentario) }>
-       <Text>Subir comentario</Text>
+       <Text style={styles.subir}>Subir comentario</Text>
        </TouchableOpacity> 
        } 
 
@@ -99,8 +99,56 @@ render(){
   const styles= StyleSheet.create({
       input:{
           height: 32,
-          borderWidth:1
-      }
+          color:'white',
+          backgroundColor: '#D3B9AA',
+          fontFamily: 'Oswald, sans-serif',
+          fontWeight:'bold',
+          fontSize: 20,
+          marginTop: 20,
+    
+      },
+
+text:{
+        fontFamily: 'Oswald, sans-serif',
+        color:'white',
+        fontWeight: 'bold',
+        fontSize: 35,
+        textAlign:'center',
+        backgroundColor:'#926F5B',
+        marginBottom: 30,
+    },
+
+text2:{
+        color:'#926F5B',
+        marginTop: 5,
+        fontFamily: 'Raleway, sans-serif;',
+        fontSize: 18,
+        textAlign: 'center',
+        marginTop: 10, 
+        fontWeight: 'bold',  
+        },
+
+subir:{
+            color:'#926F5B',
+            marginTop: 5,
+            fontFamily: 'Raleway, sans-serif;',
+            fontSize: 19,
+            textAlign: 'center',
+            textDecorationLine: 'underline',
+            marginTop: 10, 
+            fontWeight: 'bold',  
+            },
+
+textComent:{
+        color:'#926F5B',
+        marginTop: 5,
+        fontFamily: 'Raleway, sans-serif;',
+        fontSize:16,
+        marginLeft:'0',
+        marginBottom: 10,   
+        },
+
+
   })
 
 export default Comments

@@ -75,24 +75,29 @@ class Profile extends Component {
 }
 const styles= StyleSheet.create ({
 
-    text:{
-        fontFamily: 'Playfair Display',
-        color:'white',
-        fontSize: 40,
-        textAlign:'center',
-        backgroundColor:'#926F5B'
-    },
-    text2:{
-        fontFamily: 'Playfair Display',
-        color:'black',
-        fontSize: 20,
-        backgroundColor:'white'
-    },
+
+
     scroll:{
         flex: 1
-    }
+    },
 
+    text:{
+        fontFamily: 'Oswald, sans-serif',
+        color:'white',
+        fontWeight: 'bold',
+        fontSize: 35,
+        textAlign:'center',
+        backgroundColor:'#926F5B',
+    },
     
+    text2:{
+       backgroundColor:'#D3B9AA',
+       color: 'white',
+        fontFamily: 'Raleway, sans-serif;',
+        fontSize: 18,
+        textAlign: 'center',
+        fontWeight: 'bold',  
+        },
 
 })
 
