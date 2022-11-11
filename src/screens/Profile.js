@@ -48,14 +48,12 @@ class Profile extends Component {
                             user: user
                         })
                     }) 
-                    console.log(user) 
                 }
             ) 
            
     }
 
     render(){
-        console.log(this.state.user);
         return(
         <View style={styles.scroll}>
             {
@@ -82,6 +80,7 @@ class Profile extends Component {
             />       
         </View>
         )
+        
     }
 }
 const styles= StyleSheet.create ({
@@ -89,7 +88,7 @@ const styles= StyleSheet.create ({
 
 
     scroll:{
-        flex: 1
+        flex: 2
     },
 
     text:{

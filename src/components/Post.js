@@ -15,7 +15,6 @@ class Post extends Component {
     }
 
 componentDidMount (){
-    console.log(this.props)
     if(this.props.postData.data.likes.includes(auth.currentUser.email)){
     this.setState({
         miLike:true
@@ -53,7 +52,7 @@ disLike(){
 
 
 render(){
-    console.log(this.state.comentario);
+    console.log(this.props);
     return(
         <View style={styles.container}>
             
@@ -88,8 +87,8 @@ render(){
                 />  
            
             <TouchableOpacity onPress={()=> this.props.navigation.navigate (
-                'Comments', {id:this.props.id} // quiero mandar el id del comentario en el que quiero entrar// asi podemos entrar al params del metodo route.// ahora con el id se que posteo selecciono.
-                )}>
+                'Comments', {id:this.props.id} //si quiero que se pueda comentar desde perfil pongo this.props.postData.id pero no se actualiza el post// quiero mandar el id del comentario en el que quiero entrar// asi podemos entrar al params del metodo route.// ahora con el id se que posteo selecciono.
+                )}> 
             <Text style={styles.agregar} >Agregar comentario</Text>
             </TouchableOpacity>
             

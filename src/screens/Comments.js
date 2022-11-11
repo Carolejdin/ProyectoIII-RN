@@ -47,14 +47,12 @@ subirComentario(comentario){
 }
 
 render(){
-    console.log(this.state.data)
-    console.log(this.state.data.comentario) 
     return (
         <View style={styles.scroll}>
         <Text style={styles.text}> Comentarios del posteo</Text>
 
-     { this.state.data.comentario == undefined?
-       <Text>  </Text>:
+     { this.state.data.comentario == undefined ?
+       <Text> </Text>:
        this.state.data.comentario.length == 0 ?
        <Text style={styles.text2} > No hay comentarios, se el primero en comentar </Text> :
     
