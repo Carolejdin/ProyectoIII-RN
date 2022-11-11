@@ -17,9 +17,8 @@ function HomeMenu(){
 
     return (
         <Tab.Navigator>
-            {/* Aca tiene que ir una navegacion stack con Home y otro profile */}
             <Tab.Screen name="Home" component={ ProfileNav } options={
-                {tabBarIcon: ()=> <FontAwesome name="home" size={26} color="#926F5B" />}
+                {tabBarIcon: ()=> <FontAwesome name="home" size={26} color="#926F5B" />} 
             } />
             <Tab.Screen name="Profile" component={ Profile } options={
                 {tabBarIcon: ()=> <Ionicons name="person-circle" size={26} color="#926F5B" />}

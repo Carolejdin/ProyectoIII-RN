@@ -1,4 +1,4 @@
-import {Text, FlatList, View, StyleSheet} from 'react-native'
+import {Text, FlatList, View, StyleSheet, Image} from 'react-native'
 import {auth, db} from '../firebase/config'
 import firebase from 'firebase'
 import React, { Component } from 'react';
@@ -48,7 +48,7 @@ class Profile extends Component {
                             user: user
                         })
                     }) 
-                    console.log(user) //NO ESTA BUSCANDO LOS USUARIOS QUE COINCIDEN CON EL MAIL DE CURRENT USER
+                    console.log(user) 
                 }
             ) 
            
@@ -61,9 +61,20 @@ class Profile extends Component {
             {
                 this.state.user.length == 0 ?
                 <Text>  </Text> :
-                <Text style={styles.text}> {this.state.user[0].data.userName} </Text> //no anda cuando es mi priopio perfil
+
+                <View >
+                <Text style={styles.text}> {this.state.user[0].data.userName} </Text> 
+                <Text style={styles.text}> {this.state.user[0].data.owner} </Text> 
+                <Text style={styles.text}> {this.state.user[0].data.bio} </Text> 
+                <Image
+                style={styles.foto}
+                source={this.state.user[0].data.foto}
+                resizeMode='cover'
+                />
+                </View>
             }
-            <Text style={styles.text2}> Lista de posteos</Text>
+            
+            <Text style={styles.text2}> Lista de sus {this.state.posts.length} posteos  </Text>
             <FlatList 
                 data={this.state.posts}
                 keyExtractor={ onePost => onePost.id.toString()}
@@ -97,6 +108,15 @@ const styles= StyleSheet.create ({
         fontSize: 18,
         textAlign: 'center',
         fontWeight: 'bold',  
+        },
+
+    foto:{
+        height:400,
+        width:400,
+        border: '2px solid #ddd',
+        borderRadius:9 ,
+        padding: 5,
+        alignItems:'center'    
         },
 
 })

@@ -22,10 +22,7 @@ componentDidMount(){
     .collection('posts')
     .doc(this.state.id)//ya se  que voy a recibir solo uno por eso despues no hago foreach
     .onSnapshot(doc=> {this.setState({
-        data: doc.data(),
-        
-        //arrayC: doc.data().comentario
-        
+        data: doc.data(),   
      }
     )
     
@@ -42,12 +39,10 @@ subirComentario(comentario){
         comentario:comentario,
     })  
  })
- 
-
-
 .then(() => {
     this.setState({
-       comentario: '',                       
+        comentario: '',     
+                         
  }) })
 }
 
@@ -55,7 +50,7 @@ render(){
     console.log(this.state.data)
     console.log(this.state.data.comentario) 
     return (
-        <View >
+        <View style={styles.scroll}>
         <Text style={styles.text}> Comentarios del posteo</Text>
 
      { this.state.data.comentario == undefined?
@@ -63,10 +58,10 @@ render(){
        this.state.data.comentario.length == 0 ?
        <Text style={styles.text2} > No hay comentarios, se el primero en comentar </Text> :
     
-    <View > 
+    <View style={styles.scroll}> 
       
             <FlatList 
-                    data={this.state.data.comentario}
+                    data={this.state.data.comentario.sort((a,b)=> b.createdAt - a.createdAt)}
                     keyExtractor={ oneComent => oneComent.createdAt.toString()}
                     renderItem={ ({item}) => <Text style={styles.textComent}>{item.owner} comento: {item.comentario}</Text>}
      
@@ -148,6 +143,9 @@ textComent:{
         marginBottom: 10,   
         },
 
+scroll:{
+        flex: 1
+        },
 
   })
 

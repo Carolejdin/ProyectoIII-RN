@@ -63,7 +63,7 @@ render(){
                 resizeMode='cover'
                 />
 
-            <TouchableOpacity style={styles.text} onPress={()=> this.props.navigation.navigate('OtrosPerfiles',{email:this.props.postData.data.owner}) }>
+            <TouchableOpacity style={styles.text} onPress={()=> this.props.navigation.navigate('Perfil',{email:this.props.postData.data.owner}) }>
             <Text  style={styles.text2}>Subido por {this.props.postData.data.owner} </Text>{/*  carga la vista y usa el email para buscarlo depsues. pasar props a traves de navegacion  */}
             </TouchableOpacity>
 
