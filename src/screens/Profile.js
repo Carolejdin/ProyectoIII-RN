@@ -70,9 +70,11 @@ class Profile extends Component {
                 <Text>  </Text> :
 
                 <View style={styles.container}>
-                <Text style={styles.text}> {this.state.user[0].data.userName} </Text> 
-                <Text style={styles.text}> {this.state.user[0].data.owner} </Text> 
-                <Text style={styles.text}> {this.state.user[0].data.bio} </Text> 
+                <View style={styles.textContainer}> 
+                <Text style={styles.text}> Nombre de usuario: {this.state.user[0].data.userName} </Text> 
+                <Text style={styles.text}> Email: {this.state.user[0].data.owner} </Text> 
+                <Text style={styles.text}> Bibliografia: {this.state.user[0].data.bio} </Text> 
+                </View>
                 { <Image
                 style={styles.foto}
                 source={this.state.user[0].data.foto}
@@ -93,7 +95,7 @@ class Profile extends Component {
                     <Text>  </Text> :
                 this.state.user[0].data.owner == auth.currentUser.email ?
                 <TouchableOpacity style={styles.text} onPress={()=> this.logOut()} >
-                <Text>Log out</Text>
+                <Text style={styles.logout}>Log out</Text>
                 </TouchableOpacity> :
                 <Text></Text>
             }   
@@ -114,7 +116,6 @@ const styles= StyleSheet.create ({
     text:{
         fontFamily: 'Oswald, sans-serif',
         color:'white',
-        fontWeight: 'bold',
         fontSize: 20,
         flexDirection: 'column',
     },
@@ -129,8 +130,9 @@ const styles= StyleSheet.create ({
         },
 
     foto:{
-        height:200,
-        width:200,
+        height:75,
+        width:75,
+        marginTop: 10,
         borderRadius:'50%',
         padding: 5,  
         },
@@ -140,6 +142,21 @@ const styles= StyleSheet.create ({
         flexDirection:'row',
         width: '100%',
         backgroundColor:'#926F5B',
+    },
+
+    textContainer:{
+        flexDirection:'wrap',
+        marginTop: 20,
+    },
+
+    logout:{
+        backgroundColor: '#946F5B',
+        marginTop: 10,
+        textAlign: 'center',
+        fontFamily: 'Raleway, sans-serif;',
+        fontSize:20,
+        fontWeight: 'bold',
+        color: 'white'
     }
 
 })

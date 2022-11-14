@@ -191,7 +191,7 @@ textComent3:{
 like:{
         marginRight:'25%',
         marginTop: 2,
-        marginLeft: 50,
+        marginLeft: '29%',
     },
 
 textLike:{
