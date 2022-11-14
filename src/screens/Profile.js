@@ -69,15 +69,15 @@ class Profile extends Component {
                 this.state.user.length == 0 ?
                 <Text>  </Text> :
 
-                <View >
+                <View style={styles.container}>
                 <Text style={styles.text}> {this.state.user[0].data.userName} </Text> 
                 <Text style={styles.text}> {this.state.user[0].data.owner} </Text> 
                 <Text style={styles.text}> {this.state.user[0].data.bio} </Text> 
-                {/* <Image
+                { <Image
                 style={styles.foto}
                 source={this.state.user[0].data.foto}
                 resizeMode='cover'
-                /> */}
+                /> }
                 </View>
             }
             
@@ -115,9 +115,8 @@ const styles= StyleSheet.create ({
         fontFamily: 'Oswald, sans-serif',
         color:'white',
         fontWeight: 'bold',
-        fontSize: 35,
-        textAlign:'center',
-        backgroundColor:'#926F5B',
+        fontSize: 20,
+        flexDirection: 'column',
     },
     
     text2:{
@@ -130,13 +129,18 @@ const styles= StyleSheet.create ({
         },
 
     foto:{
-        height:400,
-        width:400,
-        border: '2px solid #ddd',
-        borderRadius:9 ,
-        padding: 5,
-        alignItems:'center'    
+        height:200,
+        width:200,
+        borderRadius:'50%',
+        padding: 5,  
         },
+
+    container:{
+        display: 'flex',
+        flexDirection:'row',
+        width: '100%',
+        backgroundColor:'#926F5B',
+    }
 
 })
 

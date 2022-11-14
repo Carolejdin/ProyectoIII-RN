@@ -4,6 +4,7 @@ import {Text, View, FlatList, StyleSheet} from 'react-native'
 import Post from '../components/Post'
 
 
+
 class Home extends Component{
     constructor(){
         super();
@@ -29,6 +30,7 @@ class Home extends Component{
         )
     }
 
+
     render(){
         return(
             <>
@@ -37,7 +39,7 @@ class Home extends Component{
                 <FlatList 
                     data={this.state.posts}
                     keyExtractor={ onePost => onePost.id.toString()}
-                    renderItem={ ({item}) => <Post postData={item} navigation={this.props.navigation} id={item.id}/>}
+                    renderItem={ ({item}) => <Post postData={item} navigation={this.props.navigation}/>}
                 />  
                   
             </>
