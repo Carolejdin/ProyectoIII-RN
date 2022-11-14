@@ -10,7 +10,8 @@ class Buscar extends Component {
         this.state = {
             users: [],
             usersFiltrado: [],
-            textoUsuario:''
+            textoUsuario:'',
+            search: false
         }
     }
     componentDidMount() {
@@ -34,8 +35,8 @@ class Buscar extends Component {
         event.preventDefault()
          
         this.setState({
-            usersFiltrado: this.state.users.filter(info => info.data.userName.toLowerCase().includes(this.state.textoUsuario.toLowerCase()))
-        
+            usersFiltrado: this.state.users.filter(users => users.data.userName.toLowerCase().includes(this.state.textoUsuario.toLowerCase())),
+            search: true,
         })
     }
 
@@ -45,31 +46,74 @@ class Buscar extends Component {
         })
     }
 
+    borrarBuscador(){
+        this.setState({
+            usersFiltrado: '',
+            textoUsuario: ''
+        })
+    }
+
     render() {
         console.log(this.state.users)
         console.log(this.state.usersFiltrado)
         return (
             <View>
             <TextInput  
-                       placeholder='buscador'
+                       placeholder='Buscar un usuario'
                        keyboardType='default'
                        onChangeText={ text => this.setState({textoUsuario:text}) }
                        value={this.state.textoUsuario}
                        onChange={(event)=>this.controlarCambios(event)}
                     /> 
-                    <TouchableOpacity onPress={(event)=> this.evitarSubmit(event)}>
+
+                    {
+                        this.state.textoUsuario =='' ?
+                        <Text>Completar el campo</Text>:
+                        <View>
+                        <TouchableOpacity onPress={(event)=> this.evitarSubmit(event)}>
                         <Text>Buscar</Text>
-                    </TouchableOpacity>
-                    <FlatList
+                       </TouchableOpacity>
+                       </View>
+    }
+                       {this.state.usersFiltrado.length == 0 && this.state.search == true ?
+                        <Text> Ese usuario no existe </Text> :
+                        <View>
+                        <FlatList
                         data={this.state.usersFiltrado}
                         keyExtractor={item => item.id.toString()}
-                        renderItem={({item})=> <Text>{item.data.userName}</Text>}
-                    />
+                        renderItem={({item})=> 
+                            <Text onPress={()=> this.props.navigation.navigate('Profile',{email : item.data.email})}>{item.data.userName} </Text> 
+                            /* { <Image
+                            style={styles.foto}
+                            source={item.data.foto}
+                            resizeMode='cover'
+                            /> }
+                            </View> */
+                          }
+                        />
+                    
+         
+                         
+                        </View>
+                      
+                    }
+                  
+                    
                     </View>
                 
         )
     }
 
 }
+const styles= StyleSheet.create ({
+
+    foto:{
+        height:200,
+        width:200,
+        borderRadius:'50%',
+        padding: 5,  
+        },
+
+    })
 
 export default Buscar

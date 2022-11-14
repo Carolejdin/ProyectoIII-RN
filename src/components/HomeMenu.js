@@ -28,7 +28,7 @@ function HomeMenu(){
                 {tabBarIcon: ()=> <MaterialIcons name="add-a-photo" size={26} color="#926F5B" />}
             }/>
              <Tab.Screen name="Buscar" component={ Buscar }  options={
-                {tabBarIcon: ()=> <FontAwesome name="home" size={26} color="#926F5B" />} 
+                {tabBarIcon: ()=> <FontAwesome name="search" size={26} color="#926F5B" />} 
             } />
         </Tab.Navigator>
     )

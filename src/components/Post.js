@@ -114,7 +114,7 @@ render(){
                 this.props.postData.data.owner == auth.currentUser.email ?
               //  <Button title={'borrar posteo'} onPress={this.alert()} />
                  <TouchableOpacity style={styles.text} onPress={()=> this.borrarPost()} >
-                <Text>Borrar este posteo</Text>
+                <Text style={styles.borrar} >Borrar este posteo</Text>
                 </TouchableOpacity>  :
                 <Text></Text>
             }
@@ -191,6 +191,7 @@ textComent3:{
 like:{
         marginRight:'25%',
         marginTop: 2,
+        marginLeft: 50,
     },
 
 textLike:{
@@ -206,12 +207,22 @@ agregar:{
         color:'#946F5B',
         textDecorationLine: 'underline',
         marginTop: 0,
-        marginBottom: 100,
         fontFamily: 'Raleway, sans-serif;',
         fontSize:18,
         marginLeft:'0' ,
         fontWeight: 'bold',  
         },
+
+borrar:{
+    marginBottom: 100,
+    backgroundColor: '#946F5B',
+    marginTop: 10,
+    fontFamily: 'Raleway, sans-serif;',
+    fontSize:18,
+    color: 'white'
+}
+
+        
 
 })
 export default Post;
