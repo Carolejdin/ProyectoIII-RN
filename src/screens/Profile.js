@@ -1,9 +1,11 @@
 import {Text, FlatList, View, StyleSheet, Image, TouchableOpacity} from 'react-native'
 import {auth, db} from '../firebase/config'
 import firebase from 'firebase'
+import "firebase/auth";
 import React, { Component } from 'react';
 import Post from '../components/Post'
-import { computeWindowedRenderLimits } from 'react-native/Libraries/Lists/VirtualizeUtils';
+
+
 
 
 class Profile extends Component {
@@ -11,58 +13,119 @@ class Profile extends Component {
         super(props)
         this.state = {
             user:[],
-            email:'',
-            miniBio:'',
-            foto:'',
-            cantPost:'', 
+            currentEmail: '',
             posts:[],
         }
     }
 
 
     componentDidMount(){
-            db.collection('posts').where('owner', '==', this.props.route.params == undefined ? auth.currentUser.email : this.props.route.params.email).onSnapshot( 
-                docs => {
-                    let posts = [];
-                    docs.forEach( doc => {
-                        posts.push({
-                            id: doc.id,
-                            data: doc.data()
-                        })
-                        this.setState({
-                            posts: posts
-                        })
-                    }) 
-                }
-            )
-            db.collection('users').where('owner', '==', this.props.route.params == undefined ? auth.currentUser.email : this.props.route.params.email).onSnapshot(
-                docs => {
-                    let user = [];
-                    docs.forEach( doc => {
-                        user.push({
-                            id: doc.id,
-                            data: doc.data()
-                        })
-                        this.setState({
-                            user: user
-                        })
-                    }) 
-                }
-            ) 
-           
+
+        const profileEmail = this.props.route.params.email;
+
+        db.collection('posts').where('owner', '==', profileEmail).onSnapshot( 
+            docs => {
+                let posts = [];
+                docs.forEach( doc => {
+                    posts.push({
+                        id: doc.id,
+                        data: doc.data()
+                    })
+                    this.setState({
+                        posts: posts
+                    })
+                }) 
+            }
+        )
+        db.collection('users').where('owner', '==', profileEmail).onSnapshot(
+            docs => {
+                let user = [];
+                docs.forEach( doc => {
+                    user.push({
+                        id: doc.id,
+                        data: doc.data()
+                    })
+                    this.setState({
+                        user: user
+                    })
+                }) 
+            }
+        ) 
+    }
+
+    componentDidUpdate(){
+
+        const profileEmail = this.props.route.params.email;
+
+        if (this.state.currentEmail === profileEmail) return;
+        // si el email que entro pro props es igual al actual frenar el bucle, corta la funcion
+
+        this.setState({
+            posts: [],
+            user: [],
+            currentEmail: profileEmail
+        })
+
+        db.collection('posts').where('owner', '==', profileEmail).onSnapshot( 
+            docs => {
+                let posts = [];
+                docs.forEach( doc => {
+                    posts.push({
+                        id: doc.id,
+                        data: doc.data()
+                    })
+                    this.setState({
+                        posts: posts,
+                        currentEmail: profileEmail
+                    })
+                }) 
+            }
+        )
+        db.collection('users').where('owner', '==', profileEmail).onSnapshot(
+            docs => {
+                let user = [];
+                docs.forEach( doc => {
+                    user.push({
+                        id: doc.id,
+                        data: doc.data()
+                    })
+                    this.setState({
+                        user: user,
+                        currentEmail: profileEmail
+                    })
+                }) 
+            }
+        ) 
     }
     
     logOut(){
         auth.signOut()
-        .then( res => {
+        .then(res => {
             this.props.navigation.navigate('Login')
         })
         .catch(error => console.log('error'))
     }
-    
+
+    eliminarPerfil(){
+        const user = firebase.auth().currentUser;
+
+            user.delete().then(() => {
+            this.setState({
+                user:[]
+            })
+            })
+        .catch((error) => {
+        });
+    }
+
+
+    borrarUser(){
+        db.collection('users')
+        .doc(auth.currentUser.id)
+        .delete()
+    }
 
     render(){
-        console.log(this.state.user)
         return(
         <View style={styles.scroll}>
             {
@@ -94,9 +157,15 @@ class Profile extends Component {
                 this.state.user.length == 0 ?
                     <Text>  </Text> :
                 this.state.user[0].data.owner == auth.currentUser.email ?
+                <View>
                 <TouchableOpacity style={styles.text} onPress={()=> this.logOut()} >
                 <Text style={styles.logout}>Log out</Text>
-                </TouchableOpacity> :
+                </TouchableOpacity> 
+                <TouchableOpacity style={styles.text} onPress={()=> this.eliminarPerfil()} onLongPress={()=> this.borrarUser()} >
+                 <Text style={styles.logout} >Borrar perfil</Text>
+                </TouchableOpacity> 
+                </View>
+                :
                 <Text></Text>
             }   
 

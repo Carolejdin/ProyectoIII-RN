@@ -10,7 +10,8 @@ class Buscar extends Component {
         this.state = {
             users: [],
             usersFiltrado: [],
-            textoUsuario:'',
+            usersFiltradoMail: [],
+            textoUsuario: '',
             search: false
         }
     }
@@ -30,25 +31,27 @@ class Buscar extends Component {
             }
         )
     }
-    
-    evitarSubmit(event){
-        event.preventDefault()
-         
+
+    buscar(text) {
+
         this.setState({
-            usersFiltrado: this.state.users.filter(users => users.data.userName.toLowerCase().includes(this.state.textoUsuario.toLowerCase())),
+            usersFiltrado: this.state.users.filter(users => users.data.userName.toLowerCase().includes(text.toLowerCase())),
+            usersFiltradoMail: this.state.users.filter(users => users.data.owner.toLowerCase().includes(text.toLowerCase())),
             search: true,
+            textoUsuario: text
         })
     }
 
-    controlarCambios(event){
+    controlarCambios(event) {
         this.setState({
             textoUsuario: event.target.value
         })
     }
 
-    borrarBuscador(){
+    borrarBuscador() {
         this.setState({
             usersFiltrado: '',
+            usersFiltradoMail: '',
             textoUsuario: ''
         })
     }
@@ -57,65 +60,59 @@ class Buscar extends Component {
         console.log(this.state.users)
         console.log(this.state.usersFiltrado)
         return (
+                        
             <View>
-                <Text style={styles.titulo}> BUSCADOR  </Text>
-            <TextInput  
-                       placeholder='Buscar un usuario'
-                       keyboardType='default'
-                       style={styles.text}
-                       onChangeText={ text => this.setState({textoUsuario:text}) }
-                       value={this.state.textoUsuario}
-                       onChange={(event)=>this.controlarCambios(event)}
-                    /> 
+            <Text style={styles.titulo}> BUSCADOR  </Text>    
 
-                    {
-                        this.state.textoUsuario =='' ?
-                      <Text style={styles.notificacion}>Completar el campo</Text>:
-                        <View>
-                  <TouchableOpacity onPress={(event)=> this.evitarSubmit(event)}>
-                       <Text style={styles.input} > Buscar</Text>
-                  </TouchableOpacity>
-                       </View>
-    }
-                       {this.state.usersFiltrado.length == 0 && this.state.search == true ?
-                        <Text style={styles.notificacion} > Ese usuario no existe </Text> :
-                        <View>
+                <TextInput
+                    placeholder='Buscar un usuario'
+                    keyboardType='default'
+                    style={styles.text}
+                    onChangeText={text => this.buscar(text)}
+                    value={this.state.textoUsuario}
+                />
+                {this.state.usersFiltrado.length == 0 && this.state.usersFiltradoMail.length == 0 && this.state.search == true ?
+                    <Text style={styles.notificacion}> Ese usuario no existe </Text> 
+                    :
+                    <View>
                         <FlatList
-                        data={this.state.usersFiltrado}
-                        keyExtractor={item => item.id.toString()}
-                        renderItem={({item})=> 
-                            <Text style={styles.users} onPress={()=> this.props.navigation.navigate('Profile',{email : item.data.email})}>{item.data.userName} </Text> 
-                            /* { <Image
-                            style={styles.foto}
-                            source={item.data.foto}
-                            resizeMode='cover'
-                            /> }
-                            </View> */
-                          }
+                            data={this.state.usersFiltrado}
+                            keyExtractor={item => item.id.toString()}
+                            renderItem={({ item }) =>
+                            <>
+                                <TouchableOpacity onPress={() => this.props.navigation.navigate('Profile', { email: item.data.owner })}>
+                                    <Text style={styles.users} >{item.data.userName}</Text>
+                                </TouchableOpacity>
+                            </>
+                            }
                         />
-                    
-         
-                         
-                        </View>
-                      
-                    }
-                  
-                    
+                         <FlatList
+                            data={this.state.usersFiltradoMail}
+                            keyExtractor={item => item.id.toString()}
+                            renderItem={({ item }) =>
+                            <>
+                                <TouchableOpacity onPress={() => this.props.navigation.navigate('Profile', { email: item.data.owner })}>
+                                    <Text style={styles.users} >{item.data.owner}</Text>
+                                </TouchableOpacity>
+                            </>
+                            }
+                        />
                     </View>
-                
+                }
+            </View>
+
         )
     }
 
 }
-const styles= StyleSheet.create ({
+const styles = StyleSheet.create({
 
-    foto:{
-        height:200,
-        width:200,
-        borderRadius:'50%',
-        padding: 5,  
-        },
-
+    foto: {
+        height: 200,
+        width: 200,
+        borderRadius: '50%',
+        padding: 5,
+    },
     titulo:{
             fontFamily: 'Oswald, sans-serif',
             color:'white',
@@ -170,8 +167,8 @@ const styles= StyleSheet.create ({
             flexDirecion: 'wrap',
             textAlign: 'center',
             textDecorationLine: 'underline',
-        }
+        },
 
-    })
+})
 
 export default Buscar
