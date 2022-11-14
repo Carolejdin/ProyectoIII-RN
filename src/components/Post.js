@@ -1,5 +1,5 @@
 import React, {Component} from 'react'
-import { Text, View, TouchableOpacity, StyleSheet, Image, FlatList} from 'react-native'
+import { Text, View, TouchableOpacity, StyleSheet, Image, FlatList, Button, Alert} from 'react-native'
 import {auth, db} from '../firebase/config'
 import firebase from 'firebase'
 import { FontAwesome } from '@expo/vector-icons';
@@ -50,6 +50,24 @@ disLike(){
     .catch(e=>console.log(e))
 }
 
+borrarPost(){
+    db.collection('posts')
+    .doc(this.props.postData.id)
+    .delete()
+}
+
+/* alert (){
+    Alert.alert('Borrar post', 'Deseas borrar tu posteo?', [
+        {
+          text: 'Cancel',
+          onPress: () => console.log('Cancel Pressed'),
+        },
+        { text: 'OK', onPress: () => this.borrarPost()},
+      ]);
+} */
+   
+    
+
 
 render(){
     console.log(this.props);
@@ -87,20 +105,26 @@ render(){
                 />  
            
             <TouchableOpacity onPress={()=> this.props.navigation.navigate (
-                'Comments', {id:this.props.id} //si quiero que se pueda comentar desde perfil pongo this.props.postData.id pero no se actualiza el post// quiero mandar el id del comentario en el que quiero entrar// asi podemos entrar al params del metodo route.// ahora con el id se que posteo selecciono.
+                'Comments', {id:this.props.postData.id} //si quiero que se pueda comentar desde perfil pongo this.props.postData.id pero no se actualiza el post// quiero mandar el id del comentario en el que quiero entrar// asi podemos entrar al params del metodo route.// ahora con el id se que posteo selecciono.
                 )}> 
             <Text style={styles.agregar} >Agregar comentario</Text>
             </TouchableOpacity>
             
-            
+            {
+                this.props.postData.data.owner == auth.currentUser.email ?
+              //  <Button title={'borrar posteo'} onPress={this.alert()} />
+                 <TouchableOpacity style={styles.text} onPress={()=> this.borrarPost()} >
+                <Text>Borrar este posteo</Text>
+                </TouchableOpacity>  :
+                <Text></Text>
+            }
+           
            
                 
         </View>
     )
 }
 }
-
-
 
 const styles= StyleSheet.create ({
 

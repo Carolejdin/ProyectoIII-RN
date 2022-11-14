@@ -32,6 +32,12 @@ componentDidMount(){
                 //equivalente a res.redirect
                 this.props.navigation.navigate('HomeMenu')
             })
+            .then(
+                this.setState({
+                    email:'',
+                    pass:'',
+                })
+            )
             .catch(error => this.setState({errors:error}))
     }
 

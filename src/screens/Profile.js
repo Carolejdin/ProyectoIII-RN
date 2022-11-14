@@ -1,4 +1,4 @@
-import {Text, FlatList, View, StyleSheet, Image} from 'react-native'
+import {Text, FlatList, View, StyleSheet, Image, TouchableOpacity} from 'react-native'
 import {auth, db} from '../firebase/config'
 import firebase from 'firebase'
 import React, { Component } from 'react';
@@ -21,7 +21,6 @@ class Profile extends Component {
 
 
     componentDidMount(){
-
             db.collection('posts').where('owner', '==', this.props.route.params == undefined ? auth.currentUser.email : this.props.route.params.email).onSnapshot( 
                 docs => {
                     let posts = [];
@@ -52,8 +51,18 @@ class Profile extends Component {
             ) 
            
     }
+    
+    logOut(){
+        auth.signOut()
+        .then( res => {
+            this.props.navigation.navigate('Login')
+        })
+        .catch(error => console.log('error'))
+    }
+    
 
     render(){
+        console.log(this.state.user)
         return(
         <View style={styles.scroll}>
             {
@@ -64,11 +73,11 @@ class Profile extends Component {
                 <Text style={styles.text}> {this.state.user[0].data.userName} </Text> 
                 <Text style={styles.text}> {this.state.user[0].data.owner} </Text> 
                 <Text style={styles.text}> {this.state.user[0].data.bio} </Text> 
-                <Image
+                {/* <Image
                 style={styles.foto}
                 source={this.state.user[0].data.foto}
                 resizeMode='cover'
-                />
+                /> */}
                 </View>
             }
             
@@ -76,8 +85,19 @@ class Profile extends Component {
             <FlatList 
                 data={this.state.posts}
                 keyExtractor={ onePost => onePost.id.toString()}
-                renderItem={ ({item}) => <Post postData={item} navigation={this.props.navigation} />}
-            />       
+                renderItem={ ({item}) => <Post postData={item} navigation={this.props.navigation}  />}
+            />    
+
+            {
+                this.state.user.length == 0 ?
+                    <Text>  </Text> :
+                this.state.user[0].data.owner == auth.currentUser.email ?
+                <TouchableOpacity style={styles.text} onPress={()=> this.logOut()} >
+                <Text>Log out</Text>
+                </TouchableOpacity> :
+                <Text></Text>
+            }   
+
         </View>
         )
         
