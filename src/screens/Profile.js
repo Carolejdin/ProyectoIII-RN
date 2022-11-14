@@ -1,9 +1,10 @@
-import {Text, FlatList, View, StyleSheet, Image, TouchableOpacity} from 'react-native'
+import {Text, FlatList, View, StyleSheet, Image, TouchableOpacity, Modal} from 'react-native'
 import {auth, db} from '../firebase/config'
 import firebase from 'firebase'
 import "firebase/auth";
 import React, { Component } from 'react';
 import Post from '../components/Post'
+import { TextInput } from 'react-native-web';
 
 
 
@@ -15,6 +16,8 @@ class Profile extends Component {
             user:[],
             currentEmail: '',
             posts:[],
+            modalVisible: false,
+            pass: ''
         }
     }
 
@@ -107,27 +110,52 @@ class Profile extends Component {
     }
 
     eliminarPerfil(){
-        const user = firebase.auth().currentUser;
 
-            user.delete().then(() => {
-            this.setState({
-                user:[]
+        auth.signInWithEmailAndPassword(auth.currentUser.email, this.state.pass)
+        .then(() => {
+            const user = firebase.auth().currentUser;
+
+            db.collection('users')
+            .doc(auth.currentUser.id)
+            .delete()
+            .then(() => { 
+                user.delete()
+                .then(() => {
+                    this.props.navigation.navigate('Register')
+                })
             })
-            })
-        .catch((error) => {
-        });
-    }
-
-
-    borrarUser(){
-        db.collection('users')
-        .doc(auth.currentUser.id)
-        .delete()
+            .catch(err => console.log(err));
+        })
+        .catch(err => console.log(err))
     }
 
     render(){
         return(
         <View style={styles.scroll}>
+            <Modal
+                animationType="slide"
+                transparent={false}
+                visible={this.state.modalVisible}
+                onRequestClose={() => {
+                    this.setState({
+                        modalVisible: !this.state.modalVisible
+                    })
+                }}>
+                    <Text>Confirme su contraseña</Text>
+                    <TextInput  
+                        placeholder='Password'
+                        keyboardType='default'
+                        secureTextEntry= {true}
+                        onChangeText={ text => this.setState({pass: text}) }
+                        value={this.state.pass}
+                    />  
+                    <TouchableOpacity onPress={() => this.eliminarPerfil()}>
+                        <Text>Borrar</Text>
+                    </TouchableOpacity>
+                    <TouchableOpacity onPress={() => this.setState({ modalVisible: !this.state.modalVisible })}>
+                        <Text>Cerrar</Text>
+                    </TouchableOpacity>
+            </Modal>
             {
                 this.state.user.length == 0 ?
                 <Text>  </Text> :
@@ -161,8 +189,8 @@ class Profile extends Component {
                 <TouchableOpacity style={styles.text} onPress={()=> this.logOut()} >
                 <Text style={styles.logout}>Log out</Text>
                 </TouchableOpacity> 
-                <TouchableOpacity style={styles.text} onPress={()=> this.eliminarPerfil()} onLongPress={()=> this.borrarUser()} >
-                 <Text style={styles.logout} >Borrar perfil</Text>
+                <TouchableOpacity style={styles.text} onPress={()=> this.setState({ modalVisible: !this.state.modalVisible })} >
+                    <Text style={styles.logout} >Borrar perfil</Text>
                 </TouchableOpacity> 
                 </View>
                 :
