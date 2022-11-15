@@ -96,6 +96,16 @@ class Register extends Component {
                         onChangeText={ text => this.setState({errors:'',bio:text}) }
                         value={this.state.bio}
                     />  
+                     {
+                    this.state.email == '' || this.state.pass == '' || this.state.userName == '' ?
+                    <Text  style={styles.notificacion}> Completar los campos</Text> 
+                    :
+                
+                     <TouchableOpacity onPress={()=>this.registerUser(this.state.email, this.state.pass, this.state.userName, this.state.bio, this.state.foto)}>
+                        <Text style={styles.input} > REGISTRARME </Text>
+                    </TouchableOpacity>     
+                  
+                    }
 
                     {
                         this.state.showCamera ?
@@ -107,16 +117,7 @@ class Register extends Component {
                             <Text style={styles.text} > Subir foto de perfil</Text>
                         </TouchableOpacity>
                     }
-                {
-                    this.state.email == '' || this.state.pass == '' || this.state.userName == '' ?
-                    <Text  style={styles.notificacion}> Completar los campos</Text> :
                
-                    <TouchableOpacity onPress={()=>this.registerUser(this.state.email, this.state.pass, this.state.userName, this.state.bio, this.state.foto)}>
-                        <Text style={styles.input} > REGISTRARME </Text>
-                    </TouchableOpacity>
-                    
-                  
-                }
                  <Text>{this.state.errors.message}</Text>
                     <Text  style={styles.login} onPress={ () => this.props.navigation.navigate('Login')} >IR A LOGIN </Text>
                 
@@ -147,6 +148,7 @@ const styles= StyleSheet.create ({
             fontFamily: 'Raleway, sans-serif;',
             fontSize:18,
             fontStyle: 'italic', 
+            position: 'relative'
     
             },
         
@@ -158,7 +160,8 @@ const styles= StyleSheet.create ({
                 fontFamily: 'Oswald, sans-serif',
                 fontWeight:'bold',
                 fontSize: 20,
-                textAlign: 'center'
+                textAlign: 'center',
+              
           
             },
 
