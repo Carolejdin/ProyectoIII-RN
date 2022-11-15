@@ -118,9 +118,6 @@ render(){
                 </TouchableOpacity>  :
                 <Text></Text>
             }
-           
-           
-                
         </View>
     )
 }
