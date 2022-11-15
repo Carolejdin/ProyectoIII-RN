@@ -36,10 +36,15 @@ subirComentario(comentario){
         comentario: firebase.firestore.FieldValue.arrayUnion({ //comentario es el nombre de la tabla del posteo donde estan los comentarios
         owner:auth.currentUser.email,
         createdAt: Date.now(),
-        comentario:comentario,
+        comentario: comentario,
     })  
  })
 .then(() => {
+    this.props.route.params.agregarComment({
+        owner:auth.currentUser.email,
+        createdAt: Date.now(),
+        comentario: this.state.comentario,
+    })
     this.setState({
         comentario: '',     
                          

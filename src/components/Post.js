@@ -55,22 +55,21 @@ borrarPost(){
     .doc(this.props.postData.id)
     .delete()
 }
-
-/* alert (){
-    Alert.alert('Borrar post', 'Deseas borrar tu posteo?', [
-        {
-          text: 'Cancel',
-          onPress: () => console.log('Cancel Pressed'),
-        },
-        { text: 'OK', onPress: () => this.borrarPost()},
-      ]);
-} */
    
+setComment(comment) {
+
+    const newCommentsArr = this.state.comentario.concat([comment]);// comment es un objeto y lo concateno para que sea una posicion en el array de comentario
+    
+    const sortedArr = newCommentsArr.sort((a,b)=> b.createdAt - a.createdAt);
+
+    this.setState({
+        comentario: sortedArr
+    })
+}
     
 
 
 render(){
-    console.log(this.props);
     return(
         <View style={styles.container}>
             
@@ -105,7 +104,7 @@ render(){
                 />  
            
             <TouchableOpacity onPress={()=> this.props.navigation.navigate (
-                'Comments', {id:this.props.postData.id} //si quiero que se pueda comentar desde perfil pongo this.props.postData.id pero no se actualiza el post// quiero mandar el id del comentario en el que quiero entrar// asi podemos entrar al params del metodo route.// ahora con el id se que posteo selecciono.
+                'Comments', {id:this.props.postData.id, agregarComment: obj => this.setComment(obj)}  //si quiero que se pueda comentar desde perfil pongo this.props.postData.id pero no se actualiza el post// quiero mandar el id del comentario en el que quiero entrar// asi podemos entrar al params del metodo route.// ahora con el id se que posteo selecciono.
                 )}> 
             <Text style={styles.agregar} >Agregar comentario</Text>
             </TouchableOpacity>
@@ -114,7 +113,7 @@ render(){
                 this.props.postData.data.owner == auth.currentUser.email ?
               //  <Button title={'borrar posteo'} onPress={this.alert()} />
                  <TouchableOpacity style={styles.text} onPress={()=> this.borrarPost()} >
-                <Text>Borrar este posteo</Text>
+                <Text style={styles.borrar} >Borrar este posteo</Text>
                 </TouchableOpacity>  :
                 <Text></Text>
             }
@@ -188,6 +187,7 @@ textComent3:{
 like:{
         marginRight:'25%',
         marginTop: 2,
+        marginLeft: '29%',
     },
 
 textLike:{
@@ -203,12 +203,22 @@ agregar:{
         color:'#946F5B',
         textDecorationLine: 'underline',
         marginTop: 0,
-        marginBottom: 100,
         fontFamily: 'Raleway, sans-serif;',
         fontSize:18,
         marginLeft:'0' ,
         fontWeight: 'bold',  
         },
+
+borrar:{
+    marginBottom: 100,
+    backgroundColor: '#946F5B',
+    marginTop: 10,
+    fontFamily: 'Raleway, sans-serif;',
+    fontSize:18,
+    color: 'white'
+}
+
+        
 
 })
 export default Post;

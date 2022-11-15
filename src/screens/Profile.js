@@ -1,9 +1,12 @@
-import {Text, FlatList, View, StyleSheet, Image, TouchableOpacity} from 'react-native'
+import {Text, FlatList, View, StyleSheet, Image, TouchableOpacity, Modal} from 'react-native'
 import {auth, db} from '../firebase/config'
 import firebase from 'firebase'
+import "firebase/auth";
 import React, { Component } from 'react';
 import Post from '../components/Post'
-import { computeWindowedRenderLimits } from 'react-native/Libraries/Lists/VirtualizeUtils';
+import { TextInput } from 'react-native-web';
+
+
 
 
 class Profile extends Component {
@@ -11,73 +14,163 @@ class Profile extends Component {
         super(props)
         this.state = {
             user:[],
-            email:'',
-            miniBio:'',
-            foto:'',
-            cantPost:'', 
+            currentEmail: '',
             posts:[],
+            modalVisible: false,
+            pass: ''
         }
     }
 
 
     componentDidMount(){
-            db.collection('posts').where('owner', '==', this.props.route.params == undefined ? auth.currentUser.email : this.props.route.params.email).onSnapshot( 
-                docs => {
-                    let posts = [];
-                    docs.forEach( doc => {
-                        posts.push({
-                            id: doc.id,
-                            data: doc.data()
-                        })
-                        this.setState({
-                            posts: posts
-                        })
-                    }) 
-                }
-            )
-            db.collection('users').where('owner', '==', this.props.route.params == undefined ? auth.currentUser.email : this.props.route.params.email).onSnapshot(
-                docs => {
-                    let user = [];
-                    docs.forEach( doc => {
-                        user.push({
-                            id: doc.id,
-                            data: doc.data()
-                        })
-                        this.setState({
-                            user: user
-                        })
-                    }) 
-                }
-            ) 
-           
+
+        const profileEmail = this.props.route.params.email;
+
+        db.collection('posts').where('owner', '==', profileEmail).onSnapshot( 
+            docs => {
+                let posts = [];
+                docs.forEach( doc => {
+                    posts.push({
+                        id: doc.id,
+                        data: doc.data()
+                    })
+                    this.setState({
+                        posts: posts
+                    })
+                }) 
+            }
+        )
+        db.collection('users').where('owner', '==', profileEmail).onSnapshot(
+            docs => {
+                let user = [];
+                docs.forEach( doc => {
+                    user.push({
+                        id: doc.id,
+                        data: doc.data()
+                    })
+                    this.setState({
+                        user: user
+                    })
+                }) 
+            }
+        ) 
+    }
+
+    componentDidUpdate(){
+
+        const profileEmail = this.props.route.params.email;
+
+        if (this.state.currentEmail === profileEmail) return;
+        // si el email que entro pro props es igual al actual frenar el bucle, corta la funcion
+
+        this.setState({
+            posts: [],
+            user: [],
+            currentEmail: profileEmail
+        })
+
+        db.collection('posts').where('owner', '==', profileEmail).onSnapshot( 
+            docs => {
+                let posts = [];
+                docs.forEach( doc => {
+                    posts.push({
+                        id: doc.id,
+                        data: doc.data()
+                    })
+                    this.setState({
+                        posts: posts,
+                        currentEmail: profileEmail
+                    })
+                }) 
+            }
+        )
+        db.collection('users').where('owner', '==', profileEmail).onSnapshot(
+            docs => {
+                let user = [];
+                docs.forEach( doc => {
+                    user.push({
+                        id: doc.id,
+                        data: doc.data()
+                    })
+                    this.setState({
+                        user: user,
+                        currentEmail: profileEmail
+                    })
+                }) 
+            }
+        ) 
     }
     
     logOut(){
         auth.signOut()
-        .then( res => {
+        .then(res => {
             this.props.navigation.navigate('Login')
         })
         .catch(error => console.log('error'))
     }
-    
+
+    eliminarPerfil(){
+
+        auth.signInWithEmailAndPassword(auth.currentUser.email, this.state.pass)
+        .then(() => {
+            const user = firebase.auth().currentUser;
+
+            db.collection('users')
+            .doc(auth.currentUser.id)
+            .delete()
+            .then(() => { 
+                user.delete()
+                .then(() => {
+                    this.props.navigation.navigate('Register')
+                })
+            })
+            .catch(err => console.log(err));
+        })
+        .catch(err => console.log(err))
+    }
 
     render(){
-        console.log(this.state.user)
         return(
         <View style={styles.scroll}>
+            <Modal
+                animationType="slide"
+                transparent={false}
+                visible={this.state.modalVisible}
+                onRequestClose={() => {
+                    this.setState({
+                        modalVisible: !this.state.modalVisible
+                    })
+                }}>
+                    <Text>Confirme su contraseña</Text>
+                    <TextInput  
+                        placeholder='Password'
+                        keyboardType='default'
+                        secureTextEntry= {true}
+                        onChangeText={ text => this.setState({pass: text}) }
+                        value={this.state.pass}
+                    />  
+                    <TouchableOpacity onPress={() => this.eliminarPerfil()}>
+                        <Text>Borrar</Text>
+                    </TouchableOpacity>
+                    <TouchableOpacity onPress={() => this.setState({ modalVisible: !this.state.modalVisible })}>
+                        <Text>Cerrar</Text>
+                    </TouchableOpacity>
+            </Modal>
             {
                 this.state.user.length == 0 ?
                 <Text>  </Text> :
 
-                <View >
-                <Text style={styles.text}> {this.state.user[0].data.userName} </Text> 
-                <Text style={styles.text}> {this.state.user[0].data.owner} </Text> 
-                <Text style={styles.text}> {this.state.user[0].data.bio} </Text> 
-                {/* <Image
+                <View style={styles.container}>
+                <View style={styles.textContainer}> 
+                <Text style={styles.text}> Nombre de usuario: {this.state.user[0].data.userName} </Text> 
+                <Text style={styles.text}> Email: {this.state.user[0].data.owner} </Text> 
+                <Text style={styles.text}> Bibliografia: {this.state.user[0].data.bio} </Text> 
+                </View>
+                { <Image
                 style={styles.foto}
                 source={this.state.user[0].data.foto}
                 resizeMode='cover'
-                /> */}
+                /> }
                 </View>
             }
             
@@ -92,9 +185,15 @@ class Profile extends Component {
                 this.state.user.length == 0 ?
                     <Text>  </Text> :
                 this.state.user[0].data.owner == auth.currentUser.email ?
+                <View>
                 <TouchableOpacity style={styles.text} onPress={()=> this.logOut()} >
-                <Text>Log out</Text>
-                </TouchableOpacity> :
+                <Text style={styles.logout}>Log out</Text>
+                </TouchableOpacity> 
+                <TouchableOpacity style={styles.text} onPress={()=> this.setState({ modalVisible: !this.state.modalVisible })} >
+                    <Text style={styles.logout} >Borrar perfil</Text>
+                </TouchableOpacity> 
+                </View>
+                :
                 <Text></Text>
             }   
 
@@ -114,10 +213,8 @@ const styles= StyleSheet.create ({
     text:{
         fontFamily: 'Oswald, sans-serif',
         color:'white',
-        fontWeight: 'bold',
-        fontSize: 35,
-        textAlign:'center',
-        backgroundColor:'#926F5B',
+        fontSize: 20,
+        flexDirection: 'column',
     },
     
     text2:{
@@ -130,13 +227,34 @@ const styles= StyleSheet.create ({
         },
 
     foto:{
-        height:400,
-        width:400,
-        border: '2px solid #ddd',
-        borderRadius:9 ,
-        padding: 5,
-        alignItems:'center'    
+        height:75,
+        width:75,
+        marginTop: 10,
+        borderRadius:'50%',
+        padding: 5,  
         },
+
+    container:{
+        display: 'flex',
+        flexDirection:'row',
+        width: '100%',
+        backgroundColor:'#926F5B',
+    },
+
+    textContainer:{
+        flexDirection:'wrap',
+        marginTop: 20,
+    },
+
+    logout:{
+        backgroundColor: '#946F5B',
+        marginTop: 10,
+        textAlign: 'center',
+        fontFamily: 'Raleway, sans-serif;',
+        fontSize:20,
+        fontWeight: 'bold',
+        color: 'white'
+    }
 
 })
 

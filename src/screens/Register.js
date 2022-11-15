@@ -65,33 +65,38 @@ class Register extends Component {
     render(){
         return(
             <View> 
-                <Text>Registro</Text>
+                <Text style={styles.titulo}> REGISTRO </Text>
                 <View>
                     <TextInput  
-                        placeholder='email'
+                        style={styles.text}
+                        placeholder='Email'
                         keyboardType='email-address'
                         onChangeText={ text => this.setState({errors:'',email:text}) }
                         value={this.state.email}
                     /> 
                     <TextInput  
-                        placeholder='password'
+                        style={styles.text}
+                        placeholder='Password'
                         keyboardType='default'
                         secureTextEntry= {true}
                         onChangeText={ text => this.setState({errors:'',pass:text}) }
                         value={this.state.pass}
                     /> 
                     <TextInput  
-                        placeholder='user name'
+                        style={styles.text}
+                        placeholder='User name'
                         keyboardType='default'
                         onChangeText={ text => this.setState({errors:'', userName:text}) }
                         value={this.state.userName}
                     />
                     <TextInput  
+                        style={styles.text}
                         placeholder='Mini Bio'
                         keyboardType='default'
                         onChangeText={ text => this.setState({errors:'',bio:text}) }
                         value={this.state.bio}
                     />  
+
                     {
                         this.state.showCamera ?
                         <View style={{width: '100vw', heigth: '100vh'}}>
@@ -99,21 +104,21 @@ class Register extends Component {
                         </View> 
                         :
                         <TouchableOpacity onPress={()=> this.setState({showCamera:true})}>
-                            <Text>Subir foto de perfil</Text>
+                            <Text style={styles.text} > Subir foto de perfil</Text>
                         </TouchableOpacity>
                     }
                 {
                     this.state.email == '' || this.state.pass == '' || this.state.userName == '' ?
-                    <Text>Completar los campos</Text> :
+                    <Text  style={styles.notificacion}> Completar los campos</Text> :
                
                     <TouchableOpacity onPress={()=>this.registerUser(this.state.email, this.state.pass, this.state.userName, this.state.bio, this.state.foto)}>
-                        <Text>Registrarme</Text>
+                        <Text style={styles.input} > REGISTRARME </Text>
                     </TouchableOpacity>
                     
                   
                 }
                  <Text>{this.state.errors.message}</Text>
-                    <Text onPress={ () => this.props.navigation.navigate('Login')} >Ir a login</Text>
+                    <Text  style={styles.login} onPress={ () => this.props.navigation.navigate('Login')} >IR A LOGIN </Text>
                 
                 </View>
                 
@@ -122,6 +127,60 @@ class Register extends Component {
     }
     
 }
+
+const styles= StyleSheet.create ({
+
+        titulo:{
+            fontFamily: 'Oswald, sans-serif',
+            color:'white',
+            fontWeight: 'bold',
+            fontSize: 35,
+            textAlign:'center',
+            backgroundColor:'#926F5B',
+            marginBottom: 70,
+        },
+        text:{
+            color:'#926F5B',
+            border: '2px solid #926F5B',
+            borderRadius:4 ,
+            marginBottom: '5%',
+            fontFamily: 'Raleway, sans-serif;',
+            fontSize:18,
+            fontStyle: 'italic', 
+    
+            },
+        
+        input:{
+                marginTop: '15%',
+                height: 32,
+                color:'white',
+                backgroundColor: '#D3B9AA',
+                fontFamily: 'Oswald, sans-serif',
+                fontWeight:'bold',
+                fontSize: 20,
+                textAlign: 'center'
+          
+            },
+
+        notificacion:{
+            color:'#926F5B',
+            marginTop: '15%',
+            fontFamily: 'Raleway, sans-serif;',
+            fontSize:20,
+            marginLeft:'0',
+
+            },
+
+        login:{
+            color:'#926F5B',
+             marginTop: '15%',
+            fontFamily: 'Raleway, sans-serif;',
+            fontSize: 20,
+            marginLeft:'0',
+            fontWeight: 'bold',
+        },
+
+    })
 
 
 export default Register;

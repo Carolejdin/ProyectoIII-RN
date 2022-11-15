@@ -88,7 +88,7 @@ render(){
                     // no vamos a escribir take picture
                     />
                 <TouchableOpacity style={styles.button} onPress= {()=>this.sacarFoto()}>
-                        <Text>sacar foto</Text>
+                        <Text style={styles.sacar}>Sacar foto</Text>
                 </TouchableOpacity>
             </ View>
             :
@@ -99,10 +99,10 @@ render(){
                 resizeMode='cover'
                 />
                 <TouchableOpacity style={styles.button} onPress={()=> this.cancelar()}>
-                    <Text>Cancelar</Text>
+                    <Text style={styles.boton}>Cancelar</Text>
                 </TouchableOpacity>
                 <TouchableOpacity style={styles.button} onPress={()=> this.guardarFoto()}>
-                    <Text>Aceptar</Text>
+                    <Text style={styles.boton}>Aceptar</Text>
                 </TouchableOpacity>
             </View>
                 :
@@ -118,21 +118,43 @@ render(){
 const styles= StyleSheet.create ({
     cameraBody: {
         height: '80vh',
-        width: '80vw',
+        width: '100vw',
         position: 'absolute'
     },
     button:{
         height: '5vh',
-        borderColor: '#ccc',
-        borderWidth: 1,
         padding: 5,
-        borderRadius: 4,
-        marginTop: 20
+        marginTop: 20,
+        //flexbox para que este un boton al lado del otro
+    },
+    boton:{
+        height: '5vh',
+        padding: 5,
+        marginTop: 20,
+        backgroundColor: '#946F5B',
+        marginTop: 10,
+        textAlign: 'center',
+        fontFamily: 'Raleway, sans-serif;',
+        fontSize:20,
+        fontWeight: 'bold',
+        color: 'white'
         //flexbox para que este un boton al lado del otro
     },
     preview:{
         height:'60vh'
-    }
+    },
+
+    sacar:{
+        backgroundColor: '#946F5B',
+        marginTop: 10,
+        textAlign: 'center',
+        fontFamily: 'Raleway, sans-serif;',
+        fontSize:20,
+        fontWeight: 'bold',
+        color: 'white'
+    },
+
+
 
 })
 export default MyCamera;

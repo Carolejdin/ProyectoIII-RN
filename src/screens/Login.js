@@ -50,16 +50,18 @@ componentDidMount(){
                     <ActivityIndicator size='large' color='black' /> :
 
                <View> */}
-                <Text>Login</Text>
+                <Text style={styles.titulo} > LOGIN</Text>
                 {/* <View> */}
                    <TextInput  
-                       placeholder='email'
+                       style={styles.text}
+                       placeholder='Email'
                        keyboardType='email-address'
                        onChangeText={ text => this.setState({errors: '', email:text}) }
                        value={this.state.email}
                     /> 
                     <TextInput  
-                        placeholder='password'
+                        style={styles.text}
+                        placeholder='Password'
                         keyboardType='default'
                         secureTextEntry= {true}
                         onChangeText={ text => this.setState({errors: '', pass:text}) }
@@ -67,13 +69,13 @@ componentDidMount(){
                     />  
                     { this.state.errors == '' ?
                         <TouchableOpacity onPress={()=>this.loginUser(this.state.email, this.state.pass)}>
-                        <Text>Ingresar</Text>
+                        <Text style={styles.input} >Ingresar</Text>
                         </TouchableOpacity> :
-                        <Text>{this.state.errors.message}</Text>
+                        <Text style={styles.notificacion}>{this.state.errors.message}</Text>
                       
                     }
                  
-                    <Text onPress={ () => this.props.navigation.navigate('Register')} >Ir a Registro</Text>
+                    <Text style={styles.register} onPress={ () => this.props.navigation.navigate('Register')} >IR A REGISTRO</Text>
                 {/* </View>
             </View>
              } */}
@@ -82,5 +84,59 @@ componentDidMount(){
     }
     
 }
+const styles= StyleSheet.create ({
+
+    titulo:{
+            fontFamily: 'Oswald, sans-serif',
+            color:'white',
+            fontWeight: 'bold',
+            fontSize: 35,
+            textAlign:'center',
+            backgroundColor:'#926F5B',
+            marginBottom: 70,
+        },
+        text:{
+            color:'#926F5B',
+            border: '2px solid #926F5B',
+            borderRadius:4 ,
+            marginTop: '10%',
+            fontFamily: 'Raleway, sans-serif;',
+            fontSize:18,
+            marginLeft:'0',
+            fontStyle: 'italic', 
+    
+            },
+        
+        input:{
+                marginTop: '15%',
+                height: 32,
+                color:'white',
+                backgroundColor: '#D3B9AA',
+                fontFamily: 'Oswald, sans-serif',
+                fontWeight:'bold',
+                fontSize: 20,
+                textAlign: 'center'
+          
+            },
+
+        notificacion:{
+            color:'#926F5B',
+            marginTop: '15%',
+            fontFamily: 'Raleway, sans-serif;',
+            fontSize:20,
+            marginLeft:'0',
+
+            },
+
+        register:{
+            color:'#926F5B',
+             marginTop: '15%',
+            fontFamily: 'Raleway, sans-serif;',
+            fontSize: 20,
+            marginLeft:'0',
+            fontWeight: 'bold',
+        }
+
+    })
 
 export default Login;
