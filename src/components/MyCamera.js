@@ -141,7 +141,7 @@ const styles= StyleSheet.create ({
         //flexbox para que este un boton al lado del otro
     },
     preview:{
-        height:'60vh'
+        height:'30vh'
     },
 
     sacar:{

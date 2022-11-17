@@ -14,14 +14,17 @@ class Login extends Component {
             email:'',
             pass:'',
             errors:'',
-            //loading: true
+           // loading: false
         }
     }
 componentDidMount(){
     auth.onAuthStateChanged(user => {
         if(user){
+            //this.setState({
+            //    loading: true
+            //})
             this.props.navigation.navigate('HomeMenu')
-        } 
+        }
        
     })
 }
@@ -45,13 +48,13 @@ componentDidMount(){
     render(){
         return(
             <View> 
-               {/* {
-                    this.state.loading ?
+               
+                  {/*  this.state.loading ?
                     <ActivityIndicator size='large' color='black' /> :
 
                <View> */}
                 <Text style={styles.titulo} > LOGIN</Text>
-                {/* <View> */}
+                
                    <TextInput  
                        style={styles.text}
                        placeholder='Email'
@@ -59,6 +62,7 @@ componentDidMount(){
                        onChangeText={ text => this.setState({errors: '', email:text}) }
                        value={this.state.email}
                     /> 
+                    
                     <TextInput  
                         style={styles.text}
                         placeholder='Password'
@@ -67,19 +71,21 @@ componentDidMount(){
                         onChangeText={ text => this.setState({errors: '', pass:text}) }
                         value={this.state.pass}
                     />  
+                 
                     { this.state.errors == '' ?
                         <TouchableOpacity onPress={()=>this.loginUser(this.state.email, this.state.pass)}>
                         <Text style={styles.input} >Ingresar</Text>
                         </TouchableOpacity> :
+                        
                         <Text style={styles.notificacion}>{this.state.errors.message}</Text>
-                      
                     }
-                 
+                    
                     <Text style={styles.register} onPress={ () => this.props.navigation.navigate('Register')} >IR A REGISTRO</Text>
-                {/* </View>
+                  {/*  // </View>
+                   // } */}
             </View>
-             } */}
-        </View>
+             
+    
         )
     }
     
