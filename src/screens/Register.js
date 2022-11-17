@@ -96,8 +96,19 @@ class Register extends Component {
                         onChangeText={ text => this.setState({errors:'',bio:text}) }
                         value={this.state.bio}
                     />  
+
+                      {  this.state.showCamera ?
+                        <View style={{width: '100vw', heigth: '100vh'}}>
+                            <MyCamera onImageUpload={url => this.onImageUpload(url)}/> 
+                        </View> 
+                        :
+                        <TouchableOpacity onPress={()=> this.setState({showCamera:true})}>
+                            <Text style={styles.text} > Subir foto de perfil</Text>
+                        </TouchableOpacity>
+                    }
+
                      {
-                    this.state.email == '' || this.state.pass == '' || this.state.userName == '' ?
+                    this.state.email == '' || this.state.pass == '' || this.state.userName == '' || this.state.foto == ''?
                     <Text  style={styles.notificacion}> Completar los campos</Text> 
                     :
                 
@@ -107,16 +118,7 @@ class Register extends Component {
                   
                     }
 
-                    {
-                        this.state.showCamera ?
-                        <View style={{width: '100vw', heigth: '100vh'}}>
-                            <MyCamera onImageUpload={url => this.onImageUpload(url)}/> 
-                        </View> 
-                        :
-                        <TouchableOpacity onPress={()=> this.setState({showCamera:true})}>
-                            <Text style={styles.text} > Subir foto de perfil</Text>
-                        </TouchableOpacity>
-                    }
+                    
                
                  <Text>{this.state.errors.message}</Text>
                     <Text  style={styles.login} onPress={ () => this.props.navigation.navigate('Login')} >IR A LOGIN </Text>

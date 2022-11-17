@@ -190,9 +190,9 @@ class Profile extends Component {
             />    
 
             {
-                this.state.user.length == 0 ?
-                    <Text>  </Text> :
-                this.state.user[0].data.owner == auth.currentUser.email ?
+               this.state.user.length == 0 ?
+                 <Text>  </Text> :
+               this.state.user[0].data.owner == auth.currentUser.email ?
                 <View>
                 <TouchableOpacity style={styles.text} onPress={()=> this.logOut()} >
                 <Text style={styles.logout}>Log out</Text>
@@ -201,8 +201,8 @@ class Profile extends Component {
                     <Text style={styles.logout} >Borrar perfil</Text>
                 </TouchableOpacity> 
                 </View>
-                :
-                <Text></Text>
+              :
+              <Text></Text>
             }   
 
         </View>
@@ -239,7 +239,7 @@ const styles= StyleSheet.create ({
         width:75,
         marginTop: 10,
         borderRadius:'50%',
-        padding: 5,  
+        padding: 5,
         },
 
     container:{
