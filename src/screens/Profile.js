@@ -110,26 +110,34 @@ class Profile extends Component {
     }
 
     eliminarPerfil(){
-
+       if(this.state.user.length == 0){
+           console.log('nada')
+       } else {
         auth.signInWithEmailAndPassword(auth.currentUser.email, this.state.pass)
         .then(() => {
-            const user = firebase.auth().currentUser;
+           
 
             db.collection('users')
-            .doc(auth.currentUser.id)
+            .doc(this.state.user[0].id) //auth.currentUser.uid
             .delete()
             .then(() => { 
+                const user = firebase.auth().currentUser;
                 user.delete()
-                .then(() => {
-                    this.props.navigation.navigate('Register')
+                this.setState({
+                    modalVisible: false
                 })
+                this.props.navigation.navigate('Register')
             })
             .catch(err => console.log(err));
         })
         .catch(err => console.log(err))
+       }
+    
+       
     }
 
     render(){
+        console.log(firebase.auth().currentUser)
         return(
         <View style={styles.scroll}>
             <Modal
