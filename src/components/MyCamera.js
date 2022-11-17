@@ -117,14 +117,14 @@ render(){
 }
 const styles= StyleSheet.create ({
     cameraBody: {
-        height: '80vh',
+        height: '50vh',
         width: '100vw',
         position: 'absolute'
     },
     button:{
         height: '5vh',
         padding: 5,
-        marginTop: 20,
+        marginTop: 10,
         //flexbox para que este un boton al lado del otro
     },
     boton:{
@@ -132,7 +132,6 @@ const styles= StyleSheet.create ({
         padding: 5,
         marginTop: 20,
         backgroundColor: '#946F5B',
-        marginTop: 10,
         textAlign: 'center',
         fontFamily: 'Raleway, sans-serif;',
         fontSize:20,
@@ -141,7 +140,7 @@ const styles= StyleSheet.create ({
         //flexbox para que este un boton al lado del otro
     },
     preview:{
-        height:'30vh'
+        height:'45vh'
     },
 
     sacar:{

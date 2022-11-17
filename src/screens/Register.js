@@ -66,6 +66,7 @@ class Register extends Component {
         return(
             <View> 
                 <Text style={styles.titulo}> REGISTRO </Text>
+                <Text  style={styles.login} onPress={ () => this.props.navigation.navigate('Login')} >IR A LOGIN </Text>
                 <View>
                     <TextInput  
                         style={styles.text}
@@ -121,7 +122,7 @@ class Register extends Component {
                     
                
                  <Text>{this.state.errors.message}</Text>
-                    <Text  style={styles.login} onPress={ () => this.props.navigation.navigate('Login')} >IR A LOGIN </Text>
+                
                 
                 </View>
                 
@@ -140,7 +141,7 @@ const styles= StyleSheet.create ({
             fontSize: 35,
             textAlign:'center',
             backgroundColor:'#926F5B',
-            marginBottom: 70,
+            marginBottom: 10,
         },
         text:{
             color:'#926F5B',
@@ -178,11 +179,12 @@ const styles= StyleSheet.create ({
 
         login:{
             color:'#926F5B',
-             marginTop: '15%',
+            marginBottom: '8%',
             fontFamily: 'Raleway, sans-serif;',
             fontSize: 20,
             marginLeft:'0',
             fontWeight: 'bold',
+            
         },
 
     })
