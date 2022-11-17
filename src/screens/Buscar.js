@@ -61,7 +61,7 @@ class Buscar extends Component {
         console.log(this.state.usersFiltrado)
         return (
                         
-            <View>
+            <View style={styles.scroll}> 
             <Text style={styles.titulo}> BUSCADOR  </Text>    
 
                 <TextInput
@@ -74,7 +74,7 @@ class Buscar extends Component {
                 {this.state.usersFiltrado.length == 0 && this.state.usersFiltradoMail.length == 0 && this.state.search == true ?
                     <Text style={styles.notificacion}> Ese usuario no existe </Text> 
                     :
-                    <View>
+                    <View style={styles.scroll}>
                         <FlatList
                             data={this.state.usersFiltrado}
                             keyExtractor={item => item.id.toString()}
@@ -106,7 +106,10 @@ class Buscar extends Component {
 
 }
 const styles = StyleSheet.create({
-
+    scroll:{
+        flex: 2
+        }, 
+        
     foto: {
         height: 200,
         width: 200,
