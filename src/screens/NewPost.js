@@ -30,7 +30,6 @@ class NewPost extends Component {
                     textoPost: '',
                     showCamera: true,
                     })
-
                 this.props.navigation.navigate('Home')
                 })
                 //equivalente a res.redirect
@@ -40,7 +39,6 @@ class NewPost extends Component {
         this.setState({
             foto:url,
             showCamera: false,
-
         })
     }
     render(){
@@ -51,6 +49,7 @@ class NewPost extends Component {
                 :
            <View> 
                 <Text style={styles.titulo}> SUBIR POSTEO </Text>
+                
 
                     <TextInput  
                         placeholder='Texto posteo'
@@ -64,6 +63,8 @@ class NewPost extends Component {
                     <TouchableOpacity onPress={()=>this.newPost(this.state.owner, this.state.textoPost, this.state.foto)}>
                         <Text style={styles.input} >Publicar posteo</Text>
                     </TouchableOpacity>
+
+                   
                 </View>
                 }
             </View>

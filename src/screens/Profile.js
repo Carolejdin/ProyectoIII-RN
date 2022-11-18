@@ -137,7 +137,7 @@ class Profile extends Component {
     }
 
     render(){
-        console.log(firebase.auth().currentUser)
+        console.log(this.state.posts)
         return(
         <View style={styles.scroll}>
             <Modal

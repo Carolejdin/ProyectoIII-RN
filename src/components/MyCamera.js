@@ -50,6 +50,11 @@ guardarFoto(){
                 refStorage.getDownloadURL()
                 .then(url => this.props.onImageUpload(url))
             })
+            .then(()=>{
+                this.setState({
+                    showCamera:false
+                })
+            })
             //getdownloadURL es un metodo asincronico
             //put es un metodo asincronico, put guarda la foto en firebase (imagen es lo que recibo del segundo then)
         //ref es un metodo de storage, se va a crear una carpeta photos y ahi va a guardar el archivo

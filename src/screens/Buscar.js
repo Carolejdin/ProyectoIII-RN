@@ -74,13 +74,13 @@ class Buscar extends Component {
                 {this.state.usersFiltrado.length == 0 && this.state.usersFiltradoMail.length == 0 && this.state.search == true ?
                     <Text style={styles.notificacion}> Ese usuario no existe </Text> 
                     :
-                    <View style={styles.scroll}>
+                    <View style={styles.container}>
                         <FlatList
                             data={this.state.usersFiltrado}
                             keyExtractor={item => item.id.toString()}
                             renderItem={({ item }) =>
                             <>
-                                <TouchableOpacity onPress={() => this.props.navigation.navigate('Profile', { email: item.data.owner })}>
+                                <TouchableOpacity onPress={() => this.props.navigation.navigate('My profile', { email: item.data.owner })}>
                                     <Text style={styles.users} >{item.data.userName}</Text>
                                 </TouchableOpacity>
                             </>
@@ -91,7 +91,7 @@ class Buscar extends Component {
                             keyExtractor={item => item.id.toString()}
                             renderItem={({ item }) =>
                             <>
-                                <TouchableOpacity onPress={() => this.props.navigation.navigate('Profile', { email: item.data.owner })}>
+                                <TouchableOpacity onPress={() => this.props.navigation.navigate('My profile', { email: item.data.owner })}>
                                     <Text style={styles.users} >{item.data.owner}</Text>
                                 </TouchableOpacity>
                             </>
@@ -106,8 +106,8 @@ class Buscar extends Component {
 
 }
 const styles = StyleSheet.create({
-    scroll:{
-        flex: 2
+    container:{
+       marginTop: 0
         }, 
         
     foto: {

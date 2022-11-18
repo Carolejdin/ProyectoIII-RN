@@ -29,7 +29,7 @@ class HomeMenu extends Component{
                     {tabBarIcon: ()=> <FontAwesome name="home" size={26} color="#926F5B" />} 
                 } />
                 <Tab.Screen 
-                    name="Profile" 
+                    name="My profile" 
                     component={ Profile }  
                     options={
                         {

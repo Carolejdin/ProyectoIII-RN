@@ -79,8 +79,10 @@ componentDidMount(){
                         
                         <Text style={styles.notificacion}>{this.state.errors.message}</Text>
                     }
-                    
-                    <Text style={styles.register} onPress={ () => this.props.navigation.navigate('Register')} >IR A REGISTRO</Text>
+                    <TouchableOpacity onPress={()=>this.props.navigation.navigate('Register')}>
+                        <Text style={styles.register} >Ir a registro</Text>
+                        </TouchableOpacity>
+                  
                   {/*  // </View>
                    // } */}
             </View>

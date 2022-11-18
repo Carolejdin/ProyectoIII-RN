@@ -54,6 +54,7 @@ borrarPost(){
     db.collection('posts')
     .doc(this.props.postData.id)
     .delete()
+    
 }
    
 setComment(comment) {
@@ -210,7 +211,7 @@ agregar:{
         },
 
 borrar:{
-    marginBottom: 100,
+    marginBottom: 30,
     backgroundColor: '#946F5B',
     marginTop: 10,
     fontFamily: 'Raleway, sans-serif;',

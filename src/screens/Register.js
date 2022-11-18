@@ -66,7 +66,9 @@ class Register extends Component {
         return(
             <View> 
                 <Text style={styles.titulo}> REGISTRO </Text>
-                <Text  style={styles.login} onPress={ () => this.props.navigation.navigate('Login')} >IR A LOGIN </Text>
+                <TouchableOpacity onPress={()=>this.props.navigation.navigate('Login')}>
+                        <Text style={styles.login} >Ir a Login</Text>
+                </TouchableOpacity>
                 <View>
                     <TextInput  
                         style={styles.text}
@@ -109,7 +111,7 @@ class Register extends Component {
                     }
 
                      {
-                    this.state.email == '' || this.state.pass == '' || this.state.userName == '' || this.state.foto == ''?
+                    this.state.email == '' || this.state.pass == '' || this.state.userName == ''  || this.state.foto == '' ?
                     <Text  style={styles.notificacion}> Completar los campos</Text> 
                     :
                 
