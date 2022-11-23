@@ -11,6 +11,7 @@ class Post extends Component {
             cantidadLikes:this.props.postData.data.likes.length,
             miLike: false, 
             comentario: this.props.postData.data.comentario.sort((a,b)=> b.createdAt - a.createdAt),
+          //  postActualizado: []
         }
     }
 
@@ -19,7 +20,7 @@ componentDidMount (){
     this.setState({
         miLike:true
     })
-}
+    }
 }
 
 like(){
@@ -54,22 +55,31 @@ borrarPost(){
     db.collection('posts')
     .doc(this.props.postData.id)
     .delete()
-    
+    /* .then(() => db.collection('posts').onSnapshot(
+        docs => {
+            let post = [];
+            docs.forEach(doc => {
+                post.push({
+                    id: doc.id,
+                    data: doc.data()
+                })
+                    this.setState({
+                    postActualizado: post
+                })
+            })
+        }
+    ))  */
+    // .then(() => this.props.navigation.navigate('Perfil',{email:this.props.postData.data.owner/* , postActualizado:this.state.postActualizado */}))  
 }
    
 setComment(comment) {
-
-    const newCommentsArr = this.state.comentario.concat([comment]);// comment es un objeto y lo concateno para que sea una posicion en el array de comentario
-    
+    const newCommentsArr = this.state.comentario.concat([comment]);// comment es un objeto y lo concateno para que sea una posicion en el array de comentario 
     const sortedArr = newCommentsArr.sort((a,b)=> b.createdAt - a.createdAt);
-
     this.setState({
         comentario: sortedArr
     })
 }
     
-
-
 render(){
     return(
         <View style={styles.container}>
@@ -84,9 +94,8 @@ render(){
             <Text  style={styles.text2}>Subido por {this.props.postData.data.owner} </Text>{/*  carga la vista y usa el email para buscarlo depsues. pasar props a traves de navegacion  */}
             </TouchableOpacity>
 
-                 {
+                  {
                 this.state.miLike ?
-                
              <TouchableOpacity style={styles.like} onPress={()=> this.disLike()} >
                 <FontAwesome name='heart' color='brown' size={28} />
             </TouchableOpacity>
@@ -97,6 +106,7 @@ render(){
             } 
             <Text style={styles.textLike}> {this.state.cantidadLikes} likes</Text>
             <Text style={styles.text} > {this.props.postData.data.textoPost}</Text>
+            
             {<Text style={styles.textComent3} > Cantidad de comentarios:{this.state.comentario.length} </Text> }
            <FlatList 
                     data={this.state.comentario.slice(0,4)} 
@@ -105,17 +115,17 @@ render(){
                 />  
            
             <TouchableOpacity onPress={()=> this.props.navigation.navigate (
-                'Comments', {id:this.props.postData.id, agregarComment: obj => this.setComment(obj)}  //si quiero que se pueda comentar desde perfil pongo this.props.postData.id pero no se actualiza el post// quiero mandar el id del comentario en el que quiero entrar// asi podemos entrar al params del metodo route.// ahora con el id se que posteo selecciono.
+                'Comments', {id:this.props.postData.id, agregarComment: comment => this.setComment(comment)}  // quiero mandar el id del comentario en el que quiero entrar// asi podemos entrar al params del metodo route.// ahora con el id se que posteo selecciono.
                 )}> 
             <Text style={styles.agregar} >Agregar comentario</Text>
             </TouchableOpacity>
             
             {
                 this.props.postData.data.owner == auth.currentUser.email ?
-              //  <Button title={'borrar posteo'} onPress={this.alert()} />
-                 <TouchableOpacity style={styles.text} onPress={()=> this.borrarPost()} >
+                <TouchableOpacity style={styles.text} onPress={()=> this.borrarPost()} >
                 <Text style={styles.borrar} >Borrar este posteo</Text>
-                </TouchableOpacity>  :
+                </TouchableOpacity>  
+                :
                 <Text></Text>
             }
         </View>

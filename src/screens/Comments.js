@@ -17,16 +17,14 @@ class Comments extends Component {
 }
 
 componentDidMount(){
-     //Queremos llamar a la base de datos
     db
     .collection('posts')
     .doc(this.state.id)//ya se  que voy a recibir solo uno por eso despues no hago foreach
     .onSnapshot(doc=> {this.setState({
         data: doc.data(),   
-     }
-    )
-    
     })
+    }
+    )
 }
 
 subirComentario(comentario){
@@ -36,10 +34,11 @@ subirComentario(comentario){
         comentario: firebase.firestore.FieldValue.arrayUnion({ //comentario es el nombre de la tabla del posteo donde estan los comentarios
         owner:auth.currentUser.email,
         createdAt: Date.now(),
-        comentario: comentario,
+        comentario: comentario, 
     })  
  })
 .then(() => {
+    
     this.props.route.params.agregarComment({
         owner:auth.currentUser.email,
         createdAt: Date.now(),
@@ -47,11 +46,13 @@ subirComentario(comentario){
     })
     this.setState({
         comentario: '',     
-                         
- }) })
+    }) 
+}
+)
 }
 
 render(){
+    console.log(this.props)
     return (
         <View style={styles.scroll}>
         <Text style={styles.text}> Comentarios del posteo</Text>

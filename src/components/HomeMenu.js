@@ -26,7 +26,8 @@ class HomeMenu extends Component{
         return (
             <Tab.Navigator>
                 <Tab.Screen name="Home" component={ ProfileNav }  options={
-                    {tabBarIcon: ()=> <FontAwesome name="home" size={26} color="#926F5B" />} 
+                    {tabBarIcon: ()=> <FontAwesome name="home" size={26} color="#926F5B" />,
+                    headerShown: false}                     
                 } />
                 <Tab.Screen 
                     name="My profile" 
@@ -34,6 +35,7 @@ class HomeMenu extends Component{
                     options={
                         {
                             tabBarIcon: ()=> <Ionicons name="person-circle" size={26} color="#926F5B" />,
+                            headerShown: false,
                             tabBarButton: props => (
                                 <TouchableOpacity 
                                     {...props} 

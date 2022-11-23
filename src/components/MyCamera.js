@@ -21,7 +21,7 @@ componentDidMount(){
     // si este permiso es aceptado queremos modificar el estado
     .then(() => this.setState(
         {
-            permissions: true
+            permissions: true,
         }
     ))
     .catch (error=> console.log(error))
@@ -67,10 +67,8 @@ guardarFoto(){
 }
 
 cancelar(){
-
         this.setState({
             urlTemporal: '',
-            showCamera:true 
         })
    
 }
@@ -115,8 +113,6 @@ render(){
             }
         </View>
         // esto depende de si request camera permissionsAsync nos da permisos o no
-
-
     )
 }
 }

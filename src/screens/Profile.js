@@ -6,9 +6,6 @@ import React, { Component } from 'react';
 import Post from '../components/Post'
 import { TextInput } from 'react-native-web';
 
-
-
-
 class Profile extends Component {
     constructor(props){
         super(props)
@@ -20,7 +17,6 @@ class Profile extends Component {
             pass: ''
         }
     }
-
 
     componentDidMount(){
 
@@ -115,8 +111,6 @@ class Profile extends Component {
        } else {
         auth.signInWithEmailAndPassword(auth.currentUser.email, this.state.pass)
         .then(() => {
-           
-
             db.collection('users')
             .doc(this.state.user[0].id) //auth.currentUser.uid
             .delete()
@@ -137,7 +131,7 @@ class Profile extends Component {
     }
 
     render(){
-        console.log(this.state.posts)
+        console.log(this.props)
         return(
         <View style={styles.scroll}>
             <Modal
