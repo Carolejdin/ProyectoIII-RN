@@ -27,7 +27,6 @@ class Register extends Component {
         //Registrar en firebase y si el reigstro sale bien redireccionar a login
         auth.createUserWithEmailAndPassword(email, pass)
             .then( res => {
-                
                 db.collection('users').add({
                     owner: email,
                     userName: userName,
@@ -48,8 +47,7 @@ class Register extends Component {
                 })
                 .catch(error => console.log(error))    
                 
-            })
-           // .catch(error => console.log(error))    
+            })    
             .catch(error => this.setState({errors:error}))
     }
 
@@ -109,15 +107,14 @@ class Register extends Component {
                         </TouchableOpacity>
                     }
 
-                     {
+                    {
                     this.state.email == '' || this.state.pass == '' || this.state.userName == ''  || this.state.foto == '' ?
                     <Text  style={styles.notificacion}> Completar los campos</Text> 
                     :
                 
-                     <TouchableOpacity onPress={()=>this.registerUser(this.state.email, this.state.pass, this.state.userName, this.state.bio, this.state.foto)}>
+                    <TouchableOpacity onPress={()=>this.registerUser(this.state.email, this.state.pass, this.state.userName, this.state.bio, this.state.foto)}>
                         <Text style={styles.input} > REGISTRARME </Text>
                     </TouchableOpacity>     
-                  
                     }
 
                     
