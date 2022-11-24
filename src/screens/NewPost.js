@@ -30,7 +30,7 @@ class NewPost extends Component {
             showCamera: true,
             })
             this.props.navigation.navigate('Home')
-            })
+        })
         .catch(error => console.log(error))       
     }
     
@@ -44,39 +44,32 @@ class NewPost extends Component {
     render(){
         return(
             <View>
-              
-                {this.state.showCamera ?
-                <View>
-                <Text style={styles.title}> NEW POST </Text>
-                < MyCamera onImageUpload= {url=> this.onImageUpload(url)} />
-                </View>
-                :
-           <View> 
-                <Text style={styles.posteo}> SUBIR POSTEO </Text>
-                
-
-                    <TextInput  
-                        placeholder='Texto posteo'
-                        keyboardType='default'
-                        style={styles.text}
-                        multiline = {true}
-                        numberOfLines = {4}
-                        onChangeText={ text => this.setState({textoPost:text}) }
-                        value={this.state.textoPost}
-                    /> 
+                { this.state.showCamera ?
+                    <View>
+                        <Text style={styles.title}> NEW POST </Text>
+                        < MyCamera onImageUpload= {url=> this.onImageUpload(url)} />
+                    </View>
+                    :
+                    <View> 
+                        <Text style={styles.posteo}> SUBIR POSTEO </Text>
+                        <TextInput  
+                            placeholder='Texto posteo'
+                            keyboardType='default'
+                            style={styles.text}
+                            multiline = {true}
+                            numberOfLines = {4}
+                            onChangeText={ text => this.setState({textoPost:text}) }
+                            value={this.state.textoPost}
+                        /> 
                    
-                    <TouchableOpacity onPress={()=>this.newPost(this.state.owner, this.state.textoPost, this.state.foto)}>
-                        <Text style={styles.input} >Publicar posteo</Text>
-                    </TouchableOpacity>
-
-                   
-                </View>
+                        <TouchableOpacity onPress={()=>this.newPost(this.state.owner, this.state.textoPost, this.state.foto)}>
+                            <Text style={styles.input} >Publicar posteo</Text>
+                        </TouchableOpacity>
+                    </View>
                 }
             </View>
-
         )
     }
-
 }
 
 const styles= StyleSheet.create ({
@@ -90,7 +83,7 @@ const styles= StyleSheet.create ({
         backgroundColor:'#926F5B',
         marginBottom: 70,
     },
-   
+
     text:{
         color:'#926F5B',
         marginTop: 0,
@@ -112,8 +105,8 @@ const styles= StyleSheet.create ({
         fontSize: 25,
         textAlign: 'center',
         marginBottom: '10%',
-      
     },
+    
     title:{
         fontFamily: 'Oswald, sans-serif',
         color:'white',

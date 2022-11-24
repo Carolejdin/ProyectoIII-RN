@@ -25,10 +25,16 @@ class HomeMenu extends Component{
     render() {
         return (
             <Tab.Navigator>
-                <Tab.Screen name="Home" component={ ProfileNav }  options={
-                    {tabBarIcon: ()=> <FontAwesome name="home" size={26} color="#926F5B" />,
-                    headerShown: false}                     
-                } />
+                <Tab.Screen 
+                    name="Home" 
+                    component={ ProfileNav }  
+                    options={
+                        {
+                            tabBarIcon: ()=> <FontAwesome name="home" size={26} color="#926F5B" />,
+                            headerShown: false
+                        }                     
+                    } />
+
                 <Tab.Screen 
                     name="My profile" 
                     component={ Profile }  
@@ -41,26 +47,33 @@ class HomeMenu extends Component{
                                     {...props} 
                                     onPress={() =>     
                                         this.props.navigation.navigate('Perfil', { email: auth.currentUser.email})
-                                    } 
-                                />
+                                    } />
                             )
                         }
-                    }
-                    />
-                <Tab.Screen name="NewPost" component={ NewPost }  options={
-                    {tabBarIcon: ()=> <MaterialIcons name="add-a-photo" size={26} color="#926F5B" />,
-                    headerShown: false,
-                    }
-                }/>
-                 <Tab.Screen name="Buscar" component={ Buscar }  options={
-                    {tabBarIcon: ()=> <FontAwesome name="search" size={26} color="#926F5B" />,
-                    headerShown: false,
-                    } 
-                } />
+                    }/>
+                
+                <Tab.Screen 
+                    name="NewPost" 
+                    component={ NewPost }  
+                    options={
+                        {
+                            tabBarIcon: ()=> <MaterialIcons name="add-a-photo" size={26} color="#926F5B" />,
+                            headerShown: false,
+                        }
+                    }/>
+                
+                <Tab.Screen 
+                    name="Buscar" 
+                    component={ Buscar }  
+                    options={
+                        {
+                            tabBarIcon: ()=> <FontAwesome name="search" size={26} color="#926F5B" />,
+                            headerShown: false,
+                        } 
+                    } />
             </Tab.Navigator>
         )
     }
-
 }
 
 export default HomeMenu;

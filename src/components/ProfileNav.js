@@ -9,14 +9,11 @@ const Stack = createNativeStackNavigator();
 
 function ProfileNav() {
   return (
-    //Plantear la navegación
-     <Stack.Navigator>
+    <Stack.Navigator>
         <Stack.Screen name="Home" component={ Home } options={{headerShown: false}}/>
         <Stack.Screen name="Perfil" component={ Profile } options={{headerShown: false}}/>    
         <Stack.Screen name="Comments" component={ Comments } />  
-     </Stack.Navigator>
-  
-   
+    </Stack.Navigator>
   );
 }
 

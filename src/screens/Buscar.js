@@ -15,6 +15,7 @@ class Buscar extends Component {
             search: false
         }
     }
+
     componentDidMount() {
         db.collection('users').onSnapshot(
             docs => {
@@ -56,64 +57,54 @@ class Buscar extends Component {
     }
 
     render() {
-        console.log(this.state.users)
-        console.log(this.state.usersFiltrado)
-        return (
-                        
+        return (           
             <View style={styles.scroll}> 
             <Text style={styles.titulo}> BUSCADOR  </Text>    
-
-                <TextInput
-                    placeholder='Buscar un usuario'
-                    keyboardType='default'
-                    style={styles.text}
-                    onChangeText={text => this.buscar(text)}
-                    value={this.state.textoUsuario}
-                />
-                {this.state.usersFiltrado.length == 0 && this.state.usersFiltradoMail.length == 0 && this.state.search == true ?
-                    <Text style={styles.notificacion}> Ese usuario no existe </Text> 
-                    :
-                    <View style={styles.container}>
-                        <FlatList
-                            data={this.state.usersFiltrado}
-                            keyExtractor={item => item.id.toString()}
-                            renderItem={({ item }) =>
-                            <>
-                                <TouchableOpacity onPress={() => this.props.navigation.navigate('My profile', { email: item.data.owner })}>
+            <TextInput
+                placeholder='Buscar un usuario'
+                keyboardType='default'
+                style={styles.text}
+                onChangeText={text => this.buscar(text)}
+                value={this.state.textoUsuario}
+            />
+            
+            { this.state.usersFiltrado.length == 0 && this.state.usersFiltradoMail.length == 0 && this.state.search == true ?
+                <Text style={styles.notificacion}> Ese usuario no existe </Text> 
+                :
+                <View style={styles.container}>
+                    <FlatList
+                        data={this.state.usersFiltrado}
+                        keyExtractor={item => item.id.toString()}
+                        renderItem={({ item }) =>
+                            <TouchableOpacity onPress={() => this.props.navigation.navigate('My profile', { email: item.data.owner })}>
                                 <View style={styles.view}>  
                                     <Text  style={styles.nombre}> User name: </Text>
                                     <Text style={styles.users} >{item.data.userName}</Text>
                                 </View>  
-                                </TouchableOpacity>
-                            </>
-                            }
-                        />
-                         <FlatList
-                            data={this.state.usersFiltradoMail}
-                            keyExtractor={item => item.id.toString()}
-                            renderItem={({ item }) =>
-                            <>
-                                <TouchableOpacity onPress={() => this.props.navigation.navigate('My profile', { email: item.data.owner })}>
+                            </TouchableOpacity>
+                            
+            }/>
+                    <FlatList
+                        data={this.state.usersFiltradoMail}
+                        keyExtractor={item => item.id.toString()}
+                        renderItem={({ item }) =>
+                            <TouchableOpacity onPress={() => this.props.navigation.navigate('My profile', { email: item.data.owner })}>
                                 <View style={styles.view}>  
                                     <Text  style={styles.nombre}> Email: </Text>
                                     <Text style={styles.users} >{item.data.owner}</Text>
                                 </View>     
-                                </TouchableOpacity>
-                            </>
-                            }
-                        />
-                    </View>
-                }
-            </View>
-
-        )
-    }
+                            </TouchableOpacity>
+            }/>
+                </View>
+        }
+        </View>
+    )}
 
 }
 const styles = StyleSheet.create({
     container:{
-       marginTop: 0
-        }, 
+        marginTop: 0
+    }, 
         
     foto: {
         height: 200,
@@ -121,6 +112,7 @@ const styles = StyleSheet.create({
         borderRadius: '50%',
         padding: 5,
     },
+
     titulo:{
         fontFamily: 'Oswald, sans-serif',
         color:'white',
@@ -188,8 +180,7 @@ const styles = StyleSheet.create({
         fontSize:18,
         color:'#926F5B', 
         marginLeft:'0'   
-    },
-        
+    },    
 })
 
 export default Buscar

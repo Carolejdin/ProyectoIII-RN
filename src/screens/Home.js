@@ -40,12 +40,11 @@ class Home extends Component{
                     keyExtractor={ onePost => onePost.id.toString()}
                     renderItem={ ({item}) => <Post postData={item} navigation={this.props.navigation}/>}
                 />  
-                  
             </>
-
         )
     }
 }
+
 const styles= StyleSheet.create ({
 
     text:{
@@ -58,8 +57,6 @@ const styles= StyleSheet.create ({
         marginBottom: 15,
         marginTop:15
     }
-    
-
 })
 
 export default Home

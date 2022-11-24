@@ -56,8 +56,7 @@ class Profile extends Component {
         const profileEmail = this.props.route.params.email;
 
         if (this.state.currentEmail === profileEmail) return;
-        // si el email que entro pro props es igual al actual frenar el bucle, corta la funcion
-
+    
         this.setState({
             posts: [],
             user: [],
@@ -106,7 +105,7 @@ class Profile extends Component {
 
     eliminarPerfil(){
        if(this.state.user.length == 0){
-           console.log('nada')
+           console.log('')
        } else {
         auth.signInWithEmailAndPassword(auth.currentUser.email, this.state.pass)
         .then(() => {
@@ -128,7 +127,6 @@ class Profile extends Component {
     }
 
     render(){
-        console.log(this.props)
         return(
         <View style={styles.scroll}>
             <Text style={styles.perfil}> PERFIL </Text>
@@ -141,44 +139,43 @@ class Profile extends Component {
                         modalVisible: !this.state.modalVisible
                     })
                 }}>
-                    <Text style={styles.textModal}>Confirme su contraseña</Text>
-                    <TextInput  
-                        style={styles.inputModal}
-                        placeholder='Password'
-                        keyboardType='default'
-                        secureTextEntry= {true}
-                        onChangeText={ text => this.setState({errors:'', pass: text}) }
-                        value={this.state.pass}
-                    />  
-                    {
-                        this.state.errors == '' ?
-                        <TouchableOpacity  style={styles.text} onPress={() => this.eliminarPerfil()}>
+                <Text style={styles.textModal}>Confirme su contraseña</Text>
+                <TextInput  
+                    style={styles.inputModal}
+                    placeholder='Password'
+                    keyboardType='default'
+                    secureTextEntry= {true}
+                    onChangeText={ text => this.setState({errors:'', pass: text}) }
+                    value={this.state.pass}
+                />  
+                    
+                { this.state.errors == '' ?
+                    <TouchableOpacity  style={styles.text} onPress={() => this.eliminarPerfil()}>
                         <Text style={styles.logout}>Borrar perfil</Text>
-                        </TouchableOpacity>
-                        :
-                        <Text style={styles.notificacion}>{this.state.errors.message}</Text>
-                    }
-                   
-                    <TouchableOpacity onPress={() => this.setState({ modalVisible: !this.state.modalVisible })}>
-                        <Text style={styles.logout}>Cancelar</Text>
                     </TouchableOpacity>
+                    :
+                    <Text style={styles.notificacion}>{this.state.errors.message}</Text>
+                }
+
+                <TouchableOpacity onPress={() => this.setState({ modalVisible: !this.state.modalVisible })}>
+                    <Text style={styles.logout}>Cancelar</Text>
+                </TouchableOpacity>
             </Modal>
 
-            {
-                this.state.user.length == 0 ?
-                <Text>  </Text> :
-
+            { this.state.user.length == 0 ?
+                <Text>  </Text> 
+                :
                 <View style={styles.container}>
-                <View style={styles.textContainer}> 
-                <Text style={styles.text}> Nombre de usuario: {this.state.user[0].data.userName} </Text> 
-                <Text style={styles.text}> Email: {this.state.user[0].data.owner} </Text> 
-                <Text style={styles.text}> Bibliografia: {this.state.user[0].data.bio} </Text> 
-                </View>
-                { <Image
-                style={styles.foto}
-                source={this.state.user[0].data.foto}
-                resizeMode='cover'
-                /> }
+                    <View style={styles.textContainer}> 
+                        <Text style={styles.text}> Nombre de usuario: {this.state.user[0].data.userName} </Text> 
+                        <Text style={styles.text}> Email: {this.state.user[0].data.owner} </Text> 
+                        <Text style={styles.text}> Bibliografia: {this.state.user[0].data.bio} </Text> 
+                    </View>
+                    <Image
+                        style={styles.foto}
+                        source={this.state.user[0].data.foto}
+                        resizeMode='cover'
+                    /> 
                 </View>
             }
             
@@ -189,22 +186,22 @@ class Profile extends Component {
                 renderItem={ ({item}) => <Post postData={item} navigation={this.props.navigation}  />}
             />    
 
-            {
-               this.state.user.length == 0 ?
-                 <Text>  </Text> :
-               this.state.user[0].data.owner == auth.currentUser.email ?
-            <View>
-                <TouchableOpacity style={styles.text} onPress={()=> this.logOut()} >
-                    <Text style={styles.logout}>Log out</Text>
-                </TouchableOpacity> 
-                <TouchableOpacity style={styles.text} onPress={()=> this.setState({ modalVisible: !this.state.modalVisible })} >
-                    <Text style={styles.logout} >Borrar perfil</Text>
-                </TouchableOpacity> 
-            </View>
-              :
-            <Text></Text>
+            { this.state.user.length == 0 ?
+                <Text>  </Text> 
+                :
+                this.state.user[0].data.owner == auth.currentUser.email ?
+                <View>
+                    <TouchableOpacity style={styles.text} onPress={()=> this.logOut()} >
+                        <Text style={styles.logout}>Log out</Text>
+                    </TouchableOpacity> 
+                   
+                    <TouchableOpacity style={styles.text} onPress={()=> this.setState({ modalVisible: !this.state.modalVisible })} >
+                        <Text style={styles.logout} >Borrar perfil</Text>
+                    </TouchableOpacity> 
+                </View>
+                :
+                <Text></Text>
             }   
-
         </View>
         )
         
@@ -214,6 +211,7 @@ const styles= StyleSheet.create ({
     scroll:{
         flex: 2
     },
+
     perfil:{
         fontFamily: 'Oswald, sans-serif',
         color:'white',
@@ -224,21 +222,22 @@ const styles= StyleSheet.create ({
         marginBottom: 15,
         marginTop:15
     },
+
     text:{
         fontFamily: 'Oswald, sans-serif',
         color:'white',
         fontSize: 20,
         flexDirection: 'column',
     },
-    
+
     text2:{
-       backgroundColor:'#D3B9AA',
-       color: 'white',
+        backgroundColor:'#D3B9AA',
+        color: 'white',
         fontFamily: 'Raleway, sans-serif;',
         fontSize: 18,
         textAlign: 'center',
         fontWeight: 'bold',  
-        },
+    },
 
     foto:{
         height:75,
@@ -246,7 +245,7 @@ const styles= StyleSheet.create ({
         marginTop: 10,
         borderRadius:'50%',
         padding: 5,
-        },
+    },
 
     container:{
         display: 'flex',
@@ -269,6 +268,7 @@ const styles= StyleSheet.create ({
         fontWeight: 'bold',
         color: 'white'
     },
+
     inputModal:{
         color:'#926F5B',
         border: '2px solid #926F5B',
@@ -277,8 +277,8 @@ const styles= StyleSheet.create ({
         fontSize:18,
         marginLeft:'0',
         fontStyle: 'italic', 
-        
     },
+
     textModal:{
         color:'#926F5B',
         fontSize:20,
@@ -289,6 +289,7 @@ const styles= StyleSheet.create ({
         borderRadius:4,
         marginTop: 10
     },
+
     notificacion:{
         color:'#926F5B',
         marginTop: '15%',
@@ -296,7 +297,6 @@ const styles= StyleSheet.create ({
         fontSize:20,
         marginLeft:'0',
     },
-
 })
 
 export default Profile

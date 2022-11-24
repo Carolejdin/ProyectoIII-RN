@@ -14,33 +14,33 @@ class MyCamera extends Component {
         this.metodosDeCamera = ''
     }
 
-componentDidMount(){
-    Camera.requestCameraPermissionsAsync()
-    .then(() => this.setState(
-        {
-            permissions: true,
-        }
-    ))
-    .catch (error=> console.log(error))
-}
+    componentDidMount(){
+        Camera.requestCameraPermissionsAsync()
+        .then(() => this.setState(
+            {
+                permissions: true,
+            }
+        ))
+        .catch (error=> console.log(error))
+    }
 
-sacarFoto(){
-    this.metodosDeCamera.takePictureAsync()
-    .then(foto => {
-        this.setState({
-            urlTemporal: foto.uri,
-            showCamera: false
+    sacarFoto(){
+        this.metodosDeCamera.takePictureAsync()
+        .then(foto => {
+            this.setState({
+                urlTemporal: foto.uri,
+                showCamera: false
+            })
         })
-    })
-    .catch(e => console.log(e))
-}
+        .catch(e => console.log(e))
+    }
 
-guardarFoto(){
-    fetch(this.state.urlTemporal) 
-    .then(res=> res.blob())
-    .then(imagen => {
-        const refStorage = storage.ref(`photos/${Date.now()}.jpg`);
-        refStorage.put(imagen)
+    guardarFoto(){
+        fetch(this.state.urlTemporal) 
+        .then(res=> res.blob())
+        .then(imagen => {
+            const refStorage = storage.ref(`photos/${Date.now()}.jpg`);
+            refStorage.put(imagen)
             .then(()=>{
                 refStorage.getDownloadURL()
                 .then(url => this.props.onImageUpload(url))
@@ -48,55 +48,57 @@ guardarFoto(){
             .then(()=>{
                 this.setState({
                     showCamera:false
-                })
             })
-    })
-    .catch(e=> console.log(e))
-}
+        })
+        })
+        .catch(e=> console.log(e))
+    }
 
-cancelar(){
-    this.setState({
-        urlTemporal: '',
-        showCamera:true
-    }) 
-}
+    cancelar(){
+        this.setState({
+            urlTemporal: '',
+            showCamera:true
+        }) 
+    }
 
-render(){
-    return (
-        <View  style = { styles.cameraBody}>
-            {this.state.permissions ?
-            this.state.showCamera ?
-            <View  style = { styles.cameraBody} > 
-                <Camera
-                    style = {styles.cameraBody}
-                    type= {Camera.Constants.Type.front}
-                    ref= {metodosDeCamera => this.metodosDeCamera = metodosDeCamera}
-                    />
-                <TouchableOpacity style={styles.button} onPress= {()=>this.sacarFoto()}>
-                        <Text style={styles.sacar}>Sacar foto</Text>
-                </TouchableOpacity>
-            </ View>
-            :
-            <View  style={styles.preview}>
-                <Image
-                style={styles.preview}
-                source={{uri: this.state.urlTemporal}}
-                resizeMode='cover'
-                />
-                <TouchableOpacity style={styles.button} onPress={()=> this.cancelar()}>
-                    <Text style={styles.boton}>Cancelar</Text>
-                </TouchableOpacity>
-                <TouchableOpacity style={styles.button} onPress={()=> this.guardarFoto()}>
-                    <Text style={styles.boton}>Aceptar</Text>
-                </TouchableOpacity>
+    render(){
+        return (
+            <View  style = { styles.cameraBody}>
+                { this.state.permissions ?
+                this.state.showCamera ?
+                    <View  style = { styles.cameraBody} > 
+                        <Camera
+                            style = {styles.cameraBody}
+                            type= {Camera.Constants.Type.front}
+                            ref= {metodosDeCamera => this.metodosDeCamera = metodosDeCamera}
+                        />
+                        <TouchableOpacity style={styles.button} onPress= {()=>this.sacarFoto()}>
+                            <Text style={styles.sacar}>Sacar foto</Text>
+                        </TouchableOpacity>
+                    </ View>
+                    :
+                    <View  style={styles.preview}>
+                        <Image
+                            style={styles.preview}
+                            source={{uri: this.state.urlTemporal}}
+                            resizeMode='cover'
+                        />
+                        <TouchableOpacity style={styles.button} onPress={()=> this.cancelar()}>
+                            <Text style={styles.boton}>Cancelar</Text>
+                        </TouchableOpacity>
+
+                        <TouchableOpacity style={styles.button} onPress={()=> this.guardarFoto()}>
+                            <Text style={styles.boton}>Aceptar</Text>
+                        </TouchableOpacity>
+                    </View>
+                    :
+                    <Text style={styles.text}> No tengo permisos</Text>
+                }
             </View>
-                :
-            <Text style={styles.text}> No tengo permisos</Text>
-            }
-        </View>
-    )
+        )
+    }
 }
-}
+
 const styles= StyleSheet.create ({
     cameraBody: {
         height: '50vh',
@@ -104,12 +106,14 @@ const styles= StyleSheet.create ({
         position: 'absolute',
         marginTop:50
     },
+
     button:{
         height: '5vh',
         width:'100vw',
         padding: 5,
         marginTop: 10,
     },
+
     boton:{
         height: '5vh',
         padding: 5,
@@ -120,8 +124,8 @@ const styles= StyleSheet.create ({
         fontSize:20,
         fontWeight: 'bold',
         color: 'white'
-        //flexbox para que este un boton al lado del otro
     },
+
     preview:{
         height:'45vh',
         marginTop:50
@@ -143,6 +147,6 @@ const styles= StyleSheet.create ({
         color:'#926F5B',
         fontFamily: 'Raleway, sans-serif;'
     }
-
 })
+
 export default MyCamera;
