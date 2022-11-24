@@ -11,7 +11,6 @@ class Post extends Component {
             cantidadLikes:this.props.postData.data.likes.length,
             miLike: false, 
             comentario: this.props.postData.data.comentario.sort((a,b)=> b.createdAt - a.createdAt),
-          //  postActualizado: []
         }
     }
 
@@ -71,7 +70,7 @@ borrarPost(){
     ))  */
     // .then(() => this.props.navigation.navigate('Perfil',{email:this.props.postData.data.owner/* , postActualizado:this.state.postActualizado */}))  
 }
-   
+
 setComment(comment) {
     const newCommentsArr = this.state.comentario.concat([comment]);// comment es un objeto y lo concateno para que sea una posicion en el array de comentario 
     const sortedArr = newCommentsArr.sort((a,b)=> b.createdAt - a.createdAt);
@@ -88,32 +87,34 @@ render(){
                 style={styles.foto}
                 source={{uri: this.props.postData.data.foto}}
                 resizeMode='cover'
-                />
+            />
 
             <TouchableOpacity style={styles.text} onPress={()=> this.props.navigation.navigate('Perfil',{email:this.props.postData.data.owner}) }>
             <Text  style={styles.text2}>Subido por {this.props.postData.data.owner} </Text>{/*  carga la vista y usa el email para buscarlo depsues. pasar props a traves de navegacion  */}
             </TouchableOpacity>
 
-                  {
+            {
                 this.state.miLike ?
-             <TouchableOpacity style={styles.like} onPress={()=> this.disLike()} >
+            <TouchableOpacity style={styles.like} onPress={()=> this.disLike()} >
                 <FontAwesome name='heart' color='brown' size={28} />
             </TouchableOpacity>
                 :
-             <TouchableOpacity style={styles.like} onPress={()=> this.like()} >
+            <TouchableOpacity style={styles.like} onPress={()=> this.like()} >
                 <FontAwesome name='heart-o' color='brown' size={28} />
-             </TouchableOpacity>
+            </TouchableOpacity>
             } 
+
             <Text style={styles.textLike}> {this.state.cantidadLikes} likes</Text>
             <Text style={styles.text} > {this.props.postData.data.textoPost}</Text>
             
-            {<Text style={styles.textComent3} > Cantidad de comentarios:{this.state.comentario.length} </Text> }
-           <FlatList 
+            { <Text style={styles.textComent3} > Cantidad de comentarios:{this.state.comentario.length} </Text> }
+    
+            <FlatList 
                     data={this.state.comentario.slice(0,4)} 
                     keyExtractor={ oneComent => oneComent.createdAt.toString()}
                     renderItem={ ({item}) => <Text style={styles.textComent}>{item.owner} comento: <Text style={styles.textComent2}> {item.comentario} </Text> </Text>}
-                />  
-           
+            />  
+
             <TouchableOpacity onPress={()=> this.props.navigation.navigate (
                 'Comments', {id:this.props.postData.id, agregarComment: comment => this.setComment(comment)}  // quiero mandar el id del comentario en el que quiero entrar// asi podemos entrar al params del metodo route.// ahora con el id se que posteo selecciono.
                 )}> 
@@ -123,14 +124,13 @@ render(){
             {
                 this.props.postData.data.owner == auth.currentUser.email ?
                 <TouchableOpacity style={styles.text} onPress={()=> this.borrarPost()} >
-                <Text style={styles.borrar} >Borrar este posteo</Text>
+                <Text style={styles.borrar}> Borrar este posteo</Text>
                 </TouchableOpacity>  
                 :
                 <Text></Text>
             }
         </View>
-    )
-}
+    )}
 }
 
 const styles= StyleSheet.create ({

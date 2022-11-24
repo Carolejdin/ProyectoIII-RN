@@ -16,31 +16,31 @@ class NewPost extends Component {
     }
 
     newPost(owner, textoPost, foto){
-        //Registrar en firebase y si el reigstro sale bien redireccionar a Home
-                db.collection('posts').add({
-                    owner: auth.currentUser.email,
-                    textoPost: textoPost,
-                    foto: foto,
-                    likes: [],
-                    comentario:[],
-                    createdAt: Date.now()
-                })
-                .then(() => {
-                    this.setState({
-                    textoPost: '',
-                    showCamera: true,
-                    })
-                this.props.navigation.navigate('Home')
-                })
-                //equivalente a res.redirect
-                .catch(error => console.log(error))       
+        db.collection('posts').add({
+            owner: auth.currentUser.email,
+            textoPost: textoPost,
+            foto: foto,
+            likes: [],
+            comentario:[],
+            createdAt: Date.now()
+        })
+        .then(() => {
+            this.setState({
+            textoPost: '',
+            showCamera: true,
+            })
+            this.props.navigation.navigate('Home')
+            })
+        .catch(error => console.log(error))       
     }
+    
     onImageUpload(url){
         this.setState({
             foto:url,
             showCamera: false,
         })
     }
+    
     render(){
         return(
             <View>

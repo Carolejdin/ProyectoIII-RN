@@ -53,7 +53,6 @@ class Profile extends Component {
     }
 
     componentDidUpdate(){
-
         const profileEmail = this.props.route.params.email;
 
         if (this.state.currentEmail === profileEmail) return;
@@ -112,7 +111,7 @@ class Profile extends Component {
         auth.signInWithEmailAndPassword(auth.currentUser.email, this.state.pass)
         .then(() => {
             db.collection('users')
-            .doc(this.state.user[0].id) //auth.currentUser.uid
+            .doc(this.state.user[0].id) 
             .delete()
             .then(() => { 
                 const user = firebase.auth().currentUser;

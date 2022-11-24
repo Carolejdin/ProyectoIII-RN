@@ -4,8 +4,8 @@ import { View,
          Text,
          TextInput,
          TouchableOpacity,
-        StyleSheet,
-        ActivityIndicator } from 'react-native';
+         StyleSheet,
+         ActivityIndicator } from 'react-native';
 import MyCamera from '../components/MyCamera';
 
 class Register extends Component {
@@ -44,7 +44,6 @@ class Register extends Component {
                         errors:'',
                         showCamera: false,                        
                     })
-                   
                     this.props.navigation.navigate('Login')
                 })
                 .catch(error => console.log(error))    

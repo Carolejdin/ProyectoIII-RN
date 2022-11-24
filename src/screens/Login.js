@@ -14,20 +14,17 @@ class Login extends Component {
             email:'',
             pass:'',
             errors:'',
-           // loading: false
         }
     }
+
 componentDidMount(){
     auth.onAuthStateChanged(user => {
         if(user){
-            //this.setState({
-            //    loading: true
-            //})
             this.props.navigation.navigate('HomeMenu')
-        }
-       
+        }     
     })
 }
+
     loginUser(email, pass){
         //Registrar en firebase y si el reigstro sale bien redireccionar a Home
         auth.signInWithEmailAndPassword(email, pass)
@@ -44,15 +41,9 @@ componentDidMount(){
             .catch(error => this.setState({errors:error}))
     }
 
-
     render(){
         return(
             <View> 
-               
-                  {/*  this.state.loading ?
-                    <ActivityIndicator size='large' color='black' /> :
-
-               <View> */}
                 <Text style={styles.titulo} > LOGIN</Text>
                 
                    <TextInput  
@@ -70,8 +61,7 @@ componentDidMount(){
                         secureTextEntry= {true}
                         onChangeText={ text => this.setState({errors: '', pass:text}) }
                         value={this.state.pass}
-                    />  
-                 
+                    /> 
                     { this.state.errors == '' ?
                         <TouchableOpacity onPress={()=>this.loginUser(this.state.email, this.state.pass)}>
                         <Text style={styles.input} >Ingresar</Text>
@@ -82,9 +72,6 @@ componentDidMount(){
                     <TouchableOpacity onPress={()=>this.props.navigation.navigate('Register')}>
                         <Text style={styles.register} >Ir a registro</Text>
                         </TouchableOpacity>
-                  
-                  {/*  // </View>
-                   // } */}
             </View>
              
     
