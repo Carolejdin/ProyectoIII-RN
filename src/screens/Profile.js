@@ -14,12 +14,12 @@ class Profile extends Component {
             currentEmail: '',
             posts:[],
             modalVisible: false,
-            pass: ''
+            pass: '',
+            errors:''
         }
     }
 
     componentDidMount(){
-
         const profileEmail = this.props.route.params.email;
 
         db.collection('posts').where('owner', '==', profileEmail).onSnapshot( 
@@ -121,18 +121,17 @@ class Profile extends Component {
                 })
                 this.props.navigation.navigate('Register')
             })
-            .catch(err => console.log(err));
+            .catch(error => console.log(error))
         })
-        .catch(err => console.log(err))
-       }
-    
-       
+        .catch(error => this.setState({errors:error}))
+        }
     }
 
     render(){
         console.log(this.props)
         return(
         <View style={styles.scroll}>
+            <Text style={styles.perfil}> PERFIL </Text>
             <Modal
                 animationType="slide"
                 transparent={false}
@@ -142,21 +141,29 @@ class Profile extends Component {
                         modalVisible: !this.state.modalVisible
                     })
                 }}>
-                    <Text>Confirme su contraseña</Text>
+                    <Text style={styles.textModal}>Confirme su contraseña</Text>
                     <TextInput  
+                        style={styles.inputModal}
                         placeholder='Password'
                         keyboardType='default'
                         secureTextEntry= {true}
-                        onChangeText={ text => this.setState({pass: text}) }
+                        onChangeText={ text => this.setState({errors:'', pass: text}) }
                         value={this.state.pass}
                     />  
-                    <TouchableOpacity onPress={() => this.eliminarPerfil()}>
-                        <Text>Borrar</Text>
-                    </TouchableOpacity>
+                    {
+                        this.state.errors == '' ?
+                        <TouchableOpacity  style={styles.text} onPress={() => this.eliminarPerfil()}>
+                        <Text style={styles.logout}>Borrar perfil</Text>
+                        </TouchableOpacity>
+                        :
+                        <Text style={styles.notificacion}>{this.state.errors.message}</Text>
+                    }
+                   
                     <TouchableOpacity onPress={() => this.setState({ modalVisible: !this.state.modalVisible })}>
-                        <Text>Cerrar</Text>
+                        <Text style={styles.logout}>Cancelar</Text>
                     </TouchableOpacity>
             </Modal>
+
             {
                 this.state.user.length == 0 ?
                 <Text>  </Text> :
@@ -186,16 +193,16 @@ class Profile extends Component {
                this.state.user.length == 0 ?
                  <Text>  </Text> :
                this.state.user[0].data.owner == auth.currentUser.email ?
-                <View>
+            <View>
                 <TouchableOpacity style={styles.text} onPress={()=> this.logOut()} >
-                <Text style={styles.logout}>Log out</Text>
+                    <Text style={styles.logout}>Log out</Text>
                 </TouchableOpacity> 
                 <TouchableOpacity style={styles.text} onPress={()=> this.setState({ modalVisible: !this.state.modalVisible })} >
                     <Text style={styles.logout} >Borrar perfil</Text>
                 </TouchableOpacity> 
-                </View>
+            </View>
               :
-              <Text></Text>
+            <Text></Text>
             }   
 
         </View>
@@ -204,13 +211,19 @@ class Profile extends Component {
     }
 }
 const styles= StyleSheet.create ({
-
-
-
     scroll:{
         flex: 2
     },
-
+    perfil:{
+        fontFamily: 'Oswald, sans-serif',
+        color:'white',
+        fontWeight: 'bold',
+        fontSize: 35,
+        textAlign:'center',
+        backgroundColor:'#926F5B',
+        marginBottom: 15,
+        marginTop:15
+    },
     text:{
         fontFamily: 'Oswald, sans-serif',
         color:'white',
@@ -255,7 +268,34 @@ const styles= StyleSheet.create ({
         fontSize:20,
         fontWeight: 'bold',
         color: 'white'
-    }
+    },
+    inputModal:{
+        color:'#926F5B',
+        border: '2px solid #926F5B',
+        borderRadius:4 ,
+        fontFamily: 'Raleway, sans-serif;',
+        fontSize:18,
+        marginLeft:'0',
+        fontStyle: 'italic', 
+        
+    },
+    textModal:{
+        color:'#926F5B',
+        fontSize:20,
+        fontWeight: 'bold',
+        marginRight:'40%',
+        width:"100%",
+        fontFamily: 'Oswald, sans-serif',
+        borderRadius:4,
+        marginTop: 10
+    },
+    notificacion:{
+        color:'#926F5B',
+        marginTop: '15%',
+        fontFamily: 'Raleway, sans-serif;',
+        fontSize:20,
+        marginLeft:'0',
+    },
 
 })
 

@@ -53,22 +53,7 @@ disLike(){
 borrarPost(){
     db.collection('posts')
     .doc(this.props.postData.id)
-    .delete()
-    /* .then(() => db.collection('posts').onSnapshot(
-        docs => {
-            let post = [];
-            docs.forEach(doc => {
-                post.push({
-                    id: doc.id,
-                    data: doc.data()
-                })
-                    this.setState({
-                    postActualizado: post
-                })
-            })
-        }
-    ))  */
-    // .then(() => this.props.navigation.navigate('Perfil',{email:this.props.postData.data.owner/* , postActualizado:this.state.postActualizado */}))  
+    .delete() 
 }
 
 setComment(comment) {
@@ -90,9 +75,12 @@ render(){
             />
 
             <TouchableOpacity style={styles.text} onPress={()=> this.props.navigation.navigate('Perfil',{email:this.props.postData.data.owner}) }>
-            <Text  style={styles.text2}>Subido por {this.props.postData.data.owner} </Text>{/*  carga la vista y usa el email para buscarlo depsues. pasar props a traves de navegacion  */}
+            <Text  style={styles.text2}>Subido por {this.props.postData.data.owner} </Text>
             </TouchableOpacity>
 
+            <Text style={styles.text} > {this.props.postData.data.textoPost}</Text>
+
+        <View style={styles.view}>
             {
                 this.state.miLike ?
             <TouchableOpacity style={styles.like} onPress={()=> this.disLike()} >
@@ -100,26 +88,35 @@ render(){
             </TouchableOpacity>
                 :
             <TouchableOpacity style={styles.like} onPress={()=> this.like()} >
-                <FontAwesome name='heart-o' color='brown' size={28} />
+                <FontAwesome name='heart-o' color='#926F5B' size={28} />
             </TouchableOpacity>
             } 
-
-            <Text style={styles.textLike}> {this.state.cantidadLikes} likes</Text>
-            <Text style={styles.text} > {this.props.postData.data.textoPost}</Text>
+             
+             <TouchableOpacity onPress={()=> this.props.navigation.navigate (
+                'Comments', {id:this.props.postData.id, agregarComment: comment => this.setComment(comment)})}> 
+            <FontAwesome name='comment-o' color='#926F5B' size={28} />
+            </TouchableOpacity>
+        </View>
             
-            { <Text style={styles.textComent3} > Cantidad de comentarios:{this.state.comentario.length} </Text> }
-    
+            {
+                this.state.cantidadLikes.length == 1 ?
+                <Text style={styles.textLike}> {this.state.cantidadLikes} like </Text>
+                :
+                <Text style={styles.textLike}> {this.state.cantidadLikes} likes </Text>
+            }
+            
+            {
+                this.state.comentario.length == 1 ?
+                <Text style={styles.textComent3} > {this.state.comentario.length} comentario </Text> 
+                :
+                <Text style={styles.textComent3} > {this.state.comentario.length} comentarios </Text> 
+            }
+
             <FlatList 
                     data={this.state.comentario.slice(0,4)} 
                     keyExtractor={ oneComent => oneComent.createdAt.toString()}
                     renderItem={ ({item}) => <Text style={styles.textComent}>{item.owner} comento: <Text style={styles.textComent2}> {item.comentario} </Text> </Text>}
             />  
-
-            <TouchableOpacity onPress={()=> this.props.navigation.navigate (
-                'Comments', {id:this.props.postData.id, agregarComment: comment => this.setComment(comment)}  // quiero mandar el id del comentario en el que quiero entrar// asi podemos entrar al params del metodo route.// ahora con el id se que posteo selecciono.
-                )}> 
-            <Text style={styles.agregar} >Agregar comentario</Text>
-            </TouchableOpacity>
             
             {
                 this.props.postData.data.owner == auth.currentUser.email ?
@@ -158,13 +155,13 @@ text:{
     },
 
 text2:{
-        color:'#926F5B',
-        fontSize:20,
-        fontWeight: 'bold',
-        marginRight:'40%',
-        width:"100%",
-        fontFamily: 'Oswald, sans-serif',
-        borderRadius:4
+    color:'#926F5B',
+    fontSize:20,
+    fontWeight: 'bold',
+    marginRight:'40%',
+    width:"100%",
+    fontFamily: 'Oswald, sans-serif',
+    borderRadius:4
     },
 
 textComent:{
@@ -172,7 +169,8 @@ textComent:{
     marginTop: 0,
     fontFamily: 'Raleway, sans-serif;',
     fontSize:16,
-    marginLeft:'0'   
+    marginLeft:'0',
+    marginBottom: 15   
     },
 
 textComent2:{
@@ -185,21 +183,20 @@ textComent2:{
         },
 
 textComent3:{
-    color:'#926F5B',
+    color:'brown',
     marginTop: 0,
     fontFamily: 'Raleway, sans-serif;',
     fontSize:18,
-    marginLeft:'0', 
+    marginLeft:'0' ,
     fontWeight: 'bold',  
-
- },
-            
+    marginBottom: 10
+},
 
 like:{
-        marginRight:'25%',
-        marginTop: 2,
-        marginLeft: '29%',
-    },
+    marginRight:'25%',
+    marginTop: 2,
+    marginLeft: '25%',
+},
 
 textLike:{
         color:'brown',
@@ -208,6 +205,7 @@ textLike:{
         fontSize:18,
         marginLeft:'0' ,
         fontWeight: 'bold',  
+      
         },
     
 agregar:{
@@ -216,17 +214,22 @@ agregar:{
         marginTop: 0,
         fontFamily: 'Raleway, sans-serif;',
         fontSize:18,
-        marginLeft:'0' ,
         fontWeight: 'bold',  
+        marginBottom:20
         },
 
 borrar:{
-    marginBottom: 30,
+    marginBottom: 20,
     backgroundColor: '#946F5B',
-    marginTop: 10,
     fontFamily: 'Raleway, sans-serif;',
     fontSize:18,
     color: 'white'
+},
+
+view:{
+    display: 'flex',
+    flexDirection: 'row',
+    marginRight: '8%'
 }
 
         

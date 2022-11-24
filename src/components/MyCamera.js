@@ -57,6 +57,7 @@ guardarFoto(){
 cancelar(){
     this.setState({
         urlTemporal: '',
+        showCamera:true
     }) 
 }
 
@@ -90,7 +91,7 @@ render(){
                 </TouchableOpacity>
             </View>
                 :
-            <Text> No tengo permisos</Text>
+            <Text style={styles.text}> No tengo permisos</Text>
             }
         </View>
     )
@@ -100,13 +101,14 @@ const styles= StyleSheet.create ({
     cameraBody: {
         height: '50vh',
         width: '100vw',
-        position: 'absolute'
+        position: 'absolute',
+        marginTop:50
     },
     button:{
         height: '5vh',
+        width:'100vw',
         padding: 5,
         marginTop: 10,
-        //flexbox para que este un boton al lado del otro
     },
     boton:{
         height: '5vh',
@@ -121,7 +123,8 @@ const styles= StyleSheet.create ({
         //flexbox para que este un boton al lado del otro
     },
     preview:{
-        height:'45vh'
+        height:'45vh',
+        marginTop:50
     },
 
     sacar:{
@@ -133,6 +136,13 @@ const styles= StyleSheet.create ({
         fontWeight: 'bold',
         color: 'white'
     },
+
+    text:{
+        marginTop:20,
+        fontWeight: 'bold',
+        color:'#926F5B',
+        fontFamily: 'Raleway, sans-serif;'
+    }
 
 })
 export default MyCamera;

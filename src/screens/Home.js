@@ -34,8 +34,7 @@ class Home extends Component{
     render(){
         return(
             <>
-                {/* <Text style={styles.text}> Home</Text> */}
-                <Text style={styles.text}> POSTEOS </Text>
+                <Text style={styles.text}> HOME </Text>
                 <FlatList 
                     data={this.state.posts}
                     keyExtractor={ onePost => onePost.id.toString()}
@@ -55,7 +54,9 @@ const styles= StyleSheet.create ({
         fontWeight: 'bold',
         fontSize: 35,
         textAlign:'center',
-        backgroundColor:'#926F5B'
+        backgroundColor:'#926F5B',
+        marginBottom: 15,
+        marginTop:15
     }
     
 

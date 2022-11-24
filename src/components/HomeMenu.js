@@ -48,10 +48,14 @@ class HomeMenu extends Component{
                     }
                     />
                 <Tab.Screen name="NewPost" component={ NewPost }  options={
-                    {tabBarIcon: ()=> <MaterialIcons name="add-a-photo" size={26} color="#926F5B" />}
+                    {tabBarIcon: ()=> <MaterialIcons name="add-a-photo" size={26} color="#926F5B" />,
+                    headerShown: false,
+                    }
                 }/>
                  <Tab.Screen name="Buscar" component={ Buscar }  options={
-                    {tabBarIcon: ()=> <FontAwesome name="search" size={26} color="#926F5B" />} 
+                    {tabBarIcon: ()=> <FontAwesome name="search" size={26} color="#926F5B" />,
+                    headerShown: false,
+                    } 
                 } />
             </Tab.Navigator>
         )

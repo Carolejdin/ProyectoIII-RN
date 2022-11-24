@@ -44,18 +44,23 @@ class NewPost extends Component {
     render(){
         return(
             <View>
+              
                 {this.state.showCamera ?
+                <View>
+                <Text style={styles.title}> NEW POST </Text>
                 < MyCamera onImageUpload= {url=> this.onImageUpload(url)} />
+                </View>
                 :
            <View> 
-                <Text style={styles.titulo}> SUBIR POSTEO </Text>
+                <Text style={styles.posteo}> SUBIR POSTEO </Text>
                 
 
                     <TextInput  
                         placeholder='Texto posteo'
                         keyboardType='default'
                         style={styles.text}
-                        //poner propiedad para que sea text area
+                        multiline = {true}
+                        numberOfLines = {4}
                         onChangeText={ text => this.setState({textoPost:text}) }
                         value={this.state.textoPost}
                     /> 
@@ -76,7 +81,7 @@ class NewPost extends Component {
 
 const styles= StyleSheet.create ({
 
-    titulo:{
+    posteo:{
         fontFamily: 'Oswald, sans-serif',
         color:'white',
         fontWeight: 'bold',
@@ -98,31 +103,29 @@ const styles= StyleSheet.create ({
         borderRadius: 4 , 
         },
     
-        input:{
-            height: 32,
-            color:'white',
-            backgroundColor: '#D3B9AA',
-            fontFamily: 'Oswald, sans-serif',
-            fontWeight:'bold',
-            fontSize: 25,
-            textAlign: 'center',
-            marginBottom: '10%',
+    input:{
+        height: 32,
+        color:'white',
+        backgroundColor: '#D3B9AA',
+        fontFamily: 'Oswald, sans-serif',
+        fontWeight:'bold',
+        fontSize: 25,
+        textAlign: 'center',
+        marginBottom: '10%',
       
-        },
+    },
+    title:{
+        fontFamily: 'Oswald, sans-serif',
+        color:'white',
+        fontWeight: 'bold',
+        fontSize: 35,
+        textAlign:'center',
+        backgroundColor:'#926F5B',
+        marginBottom: 15,
+        marginTop:15
+    }
 })
 
-// button:{
-//     height: '5vh',
-//     padding: 5,
-//     marginTop: 20,
-//     backgroundColor: '#946F5B',
-//     marginTop: 10,
-//     textAlign: 'center',
-//     fontFamily: 'Raleway, sans-serif;',
-//     fontSize:20,
-//     fontWeight: 'bold',
-//     color: 'white'},
 
-// }),
 
 export default NewPost;

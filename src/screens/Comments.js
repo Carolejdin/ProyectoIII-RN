@@ -31,7 +31,7 @@ subirComentario(comentario){
     db.collection('posts')
      .doc(this.state.id)
      .update({
-        comentario: firebase.firestore.FieldValue.arrayUnion({ //comentario es el nombre de la tabla del posteo donde estan los comentarios
+        comentario: firebase.firestore.FieldValue.arrayUnion({ 
         owner:auth.currentUser.email,
         createdAt: Date.now(),
         comentario: comentario, 

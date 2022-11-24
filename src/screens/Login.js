@@ -26,10 +26,8 @@ componentDidMount(){
 }
 
     loginUser(email, pass){
-        //Registrar en firebase y si el reigstro sale bien redireccionar a Home
         auth.signInWithEmailAndPassword(email, pass)
             .then( res => {
-                //equivalente a res.redirect
                 this.props.navigation.navigate('HomeMenu')
             })
             .then(
