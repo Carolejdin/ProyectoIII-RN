@@ -96,14 +96,9 @@ render(){
                 'Comments', {id:this.props.postData.id, agregarComment: comment => this.setComment(comment)})}> 
             <FontAwesome name='comment-o' color='#926F5B' size={28} />
             </TouchableOpacity>
-        </View>
-            
-            {
-                this.state.cantidadLikes.length == 1 ?
-                <Text style={styles.textLike}> {this.state.cantidadLikes} like </Text>
-                :
-                <Text style={styles.textLike}> {this.state.cantidadLikes} likes </Text>
-            }
+        </View> 
+              
+            <Text style={styles.textLike}> {this.state.cantidadLikes} likes </Text>
             
             {
                 this.state.comentario.length == 1 ?

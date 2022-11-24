@@ -33,7 +33,6 @@ class Buscar extends Component {
     }
 
     buscar(text) {
-
         this.setState({
             usersFiltrado: this.state.users.filter(users => users.data.userName.toLowerCase().includes(text.toLowerCase())),
             usersFiltradoMail: this.state.users.filter(users => users.data.owner.toLowerCase().includes(text.toLowerCase())),
@@ -81,7 +80,10 @@ class Buscar extends Component {
                             renderItem={({ item }) =>
                             <>
                                 <TouchableOpacity onPress={() => this.props.navigation.navigate('My profile', { email: item.data.owner })}>
+                                <View style={styles.view}>  
+                                    <Text  style={styles.nombre}> User name: </Text>
                                     <Text style={styles.users} >{item.data.userName}</Text>
+                                </View>  
                                 </TouchableOpacity>
                             </>
                             }
@@ -92,7 +94,10 @@ class Buscar extends Component {
                             renderItem={({ item }) =>
                             <>
                                 <TouchableOpacity onPress={() => this.props.navigation.navigate('My profile', { email: item.data.owner })}>
+                                <View style={styles.view}>  
+                                    <Text  style={styles.nombre}> Email: </Text>
                                     <Text style={styles.users} >{item.data.owner}</Text>
+                                </View>     
                                 </TouchableOpacity>
                             </>
                             }
@@ -117,61 +122,74 @@ const styles = StyleSheet.create({
         padding: 5,
     },
     titulo:{
-            fontFamily: 'Oswald, sans-serif',
-            color:'white',
-            fontWeight: 'bold',
-            fontSize: 35,
-            textAlign:'center',
-            backgroundColor:'#926F5B',
-            marginBottom: 70,
-        },
+        fontFamily: 'Oswald, sans-serif',
+        color:'white',
+        fontWeight: 'bold',
+        fontSize: 35,
+        textAlign:'center',
+        backgroundColor:'#926F5B',
+        marginBottom: 70,
+    },
 
-        text:{
-            color:'#926F5B',
-            marginTop: 0,
-            marginBottom: '10%',
-            fontFamily: 'Raleway, sans-serif;',
-            fontSize: 25,
-            marginLeft:'0',
-            fontStyle: 'italic', 
-            border: '2px solid #926F5B',
-            borderRadius: 4 , 
-
-            },
+    text:{
+        color:'#926F5B',
+        marginTop: 0,
+        marginBottom: '10%',
+        fontFamily: 'Raleway, sans-serif;',
+        fontSize: 25,
+        marginLeft:'0',
+        fontStyle: 'italic', 
+        border: '2px solid #926F5B',
+        borderRadius: 4 , 
+    },
         
-        input:{
-                height: 32,
-                color:'white',
-                backgroundColor: '#D3B9AA',
-                fontFamily: 'Oswald, sans-serif',
-                fontWeight:'bold',
-                fontSize: 25,
-                textAlign: 'center',
-                marginBottom: '10%',
-          
-            },
+    input:{
+        height: 32,
+        color:'white',
+        backgroundColor: '#D3B9AA',
+        fontFamily: 'Oswald, sans-serif',
+        fontWeight:'bold',
+        fontSize: 25,
+        textAlign: 'center',
+        marginBottom: '10%',
+    },
 
-        notificacion:{
-            color:'#926F5B',
-            marginTop: 0,
-            fontFamily: 'Raleway, sans-serif;',
-            fontSize: 20,
-            marginLeft:'0',
-            fontWeight: 'bold'
-            },
+    notificacion:{
+        color:'#926F5B',
+        marginTop: 0,
+        fontFamily: 'Raleway, sans-serif;',
+        fontSize: 20,
+        marginLeft:'0',
+        fontWeight: 'bold'
+    },
 
-        users:{
-            color:'#926F5B',
-            marginTop: 0,
-            fontFamily: 'Raleway, sans-serif;',
-            fontSize: 24,
-            marginLeft:'0',
-            fontWeight: 'bold',
-            flexDirecion: 'wrap',
-            textAlign: 'center',
-            textDecorationLine: 'underline',
-        },
+    users:{
+        color:'#926F5B',
+        marginTop: 0,
+        fontFamily: 'Raleway, sans-serif;',
+        fontSize: 24,
+        marginLeft:'0',
+        fontWeight: 'bold',
+        flexDirecion: 'wrap',
+        textAlign: 'center',
+        textDecorationLine: 'underline',
+    },
+        
+    view:{
+        display: 'flex',
+        flexDirection: 'row',
+        textAlign: 'center'
 
+    }, 
+
+    nombre:{
+        marginTop: 0,
+        fontFamily: 'Raleway, sans-serif;',
+        fontSize:18,
+        color:'#926F5B', 
+        marginLeft:'0'   
+    },
+        
 })
 
 export default Buscar
